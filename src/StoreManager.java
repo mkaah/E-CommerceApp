@@ -35,7 +35,7 @@ public class StoreManager{
             total += inventory.getProduct(item[0]).getPrice() * item[1];
         }
 
-        return total;
+        return Math.round(total * 100.0)/100.0;
     }
 
 
