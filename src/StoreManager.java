@@ -24,7 +24,7 @@ public class StoreManager{
         for (int[] item : cart) {
             if (item[1] > inventory.getStock(item[0])) {
                 //insufficient supply
-                System.out.println("Insufficient supply. Transaction cancelled");
+                System.out.println("Insufficient supply. Transaction cancelled\n");
                 return -1;
             }
         }

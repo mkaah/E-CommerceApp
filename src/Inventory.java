@@ -6,8 +6,8 @@
 import java.util.ArrayList;
 
 public class Inventory {
-    private ArrayList<Product> products; //Products available
-    private ArrayList<Integer> stocks; //Number of stock for each product
+    private ArrayList<Product> products; //Products available in the inventory
+    private ArrayList<Integer> stocks;   //Amount of stock available for each product
 
     public Inventory() {
         this.products = new ArrayList<>();
@@ -27,17 +27,32 @@ public class Inventory {
 
     //get the product given its id
     public Product getProduct(int id) {
-        return products.get(getProdIndex(id));
+        if (getProdIndex(id) != -1) { //product exists
+            return products.get(getProdIndex(id));
+        } else {
+            System.out.println("Product with ID " + id +  " does not exist");
+            return null;
+        }
     }
 
     //return the product name
     public String getProdName(int id) {
-        return getProduct(id).getName();
+        if (getProdIndex(id) != -1) { //product exists
+            return getProduct(id).getName();
+        } else {
+            System.out.println("Product with ID " + id +  " does not exist");
+            return null;
+        }
     }
 
     //return the product price
     public double getProdPrice(int id) {
-        return getProduct(id).getPrice();
+        if (getProdIndex(id) != -1) { //product exists
+            return getProduct(id).getPrice();
+        } else {
+            System.out.println("Product with ID " + id +  " does not exist");
+            return -1;
+        }
     }
 
     //get the amount of stock for a given product
