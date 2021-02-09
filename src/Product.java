@@ -1,5 +1,7 @@
-//Dhriti Aravind
-//Mika Le 101141818
+/* Product class. Has accessor methods for all attributes.
+ * Authors: Dhriti Aravind 101141942, Mika Le 101141818
+ * Last edited: February 9, 2021
+ */
 
 public class Product {
     private final String NAME;
@@ -19,6 +21,7 @@ public class Product {
     public String getName() {
         return NAME;
     }
+
     public int getId() {
         return ID;
     }

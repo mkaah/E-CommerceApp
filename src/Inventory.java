@@ -1,5 +1,7 @@
-//Dhriti Aravind
-//Mika Le 101141818
+/* Inventory class for managing all products and their stock
+ * Authors: Dhriti Aravind 101141942, Mika Le 101141818
+ * Last edited: February 9, 2021
+ */
 
 import java.util.ArrayList;
 
@@ -25,17 +27,32 @@ public class Inventory {
 
     //get the product given its id
     public Product getProduct(int id) {
-        return products.get(getProdIndex(id));
+        if (getProdIndex(id) != -1) { //product exists
+            return products.get(getProdIndex(id));
+        } else {
+            System.out.println("Product with ID " + id +  " does not exist");
+            return null;
+        }
     }
 
     //return the product name
     public String getProdName(int id) {
-        return getProduct(id).getName();
+        if (getProdIndex(id) != -1) { //product exists
+            return getProduct(id).getName();
+        } else {
+            System.out.println("Product with ID " + id +  " does not exist");
+            return null;
+        }
     }
 
     //return the product price
     public double getProdPrice(int id) {
-        return getProduct(id).getPrice();
+        if (getProdIndex(id) != -1) { //product exists
+            return getProduct(id).getPrice();
+        } else {
+            System.out.println("Product with ID " + id +  " does not exist");
+            return -1;
+        }
     }
 
     //get the amount of stock for a given product
@@ -45,6 +62,7 @@ public class Inventory {
             return stocks.get(i);
         }
         //product does not exist
+        System.out.println("Product with ID " + id +  " does not exist");
         return -1;
     }
 
@@ -52,9 +70,13 @@ public class Inventory {
     public void addStock(Product product, int stock) {
         int i = getProdIndex(product.getId());
 
-        if(i > -1) { //product exists
+        if(i == -1) { //product DNE
+            products.add(product);
+            stocks.add(stock);
+        } else { //product exists
             stocks.set(i, stocks.get(i) + stock);
         }
+
     }
 
     //remove stock of a given product
