@@ -27,32 +27,17 @@ public class Inventory {
 
     //get the product given its id
     public Product getProduct(int id) {
-        if (getProdIndex(id) != -1) { //product exists
-            return products.get(getProdIndex(id));
-        } else {
-            System.out.println("Product with ID " + id +  " does not exist");
-            return null;
-        }
+        return products.get(getProdIndex(id));
     }
 
     //return the product name
     public String getProdName(int id) {
-        if (getProdIndex(id) != -1) { //product exists
-            return getProduct(id).getName();
-        } else {
-            System.out.println("Product with ID " + id +  " does not exist");
-            return null;
-        }
+        return getProduct(id).getName();
     }
 
     //return the product price
     public double getProdPrice(int id) {
-        if (getProdIndex(id) != -1) { //product exists
-            return getProduct(id).getPrice();
-        } else {
-            System.out.println("Product with ID " + id +  " does not exist");
-            return -1;
-        }
+        return getProduct(id).getPrice();
     }
 
     //get the amount of stock for a given product
@@ -76,7 +61,6 @@ public class Inventory {
         } else { //product exists
             stocks.set(i, stocks.get(i) + stock);
         }
-
     }
 
     //remove stock of a given product

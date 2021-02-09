@@ -32,11 +32,11 @@ public class Main {
         System.out.println("Product Information: " + inv.getInformation(p1)[0] + " " + inv.getInformation(p1)[1] + " " + inv.getInformation(p1)[2]);
 
         //NOT SUPPOSED TO WORK
-        System.out.println("\nNOT SUPPOSED TO WORK");
-        System.out.println("Product: " + inv.getProduct(4));
-        System.out.println("Name: " + inv.getProdName(4));
-        System.out.println("Price: " + inv.getProdPrice(4));
-        System.out.println("Stock: " + inv.getStock(4));
+//        System.out.println("\nNOT SUPPOSED TO WORK");
+//        System.out.println("Product: " + inv.getProduct(4));
+//        System.out.println("Name: " + inv.getProdName(4));
+//        System.out.println("Price: " + inv.getProdPrice(4));
+//        System.out.println("Stock: " + inv.getStock(4));
 
 
         System.out.println("\n--- TESTING STORE MANAGER ---");
