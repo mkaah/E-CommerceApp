@@ -4,6 +4,7 @@
  */
 
 public class Product {
+    private int hello;
     private final String NAME;
     private final int ID;
     private final double PRICE;
