@@ -122,6 +122,14 @@ public class Inventory {
         return removed;
     }
 
+    public ArrayList<Integer> getStockList() {
+        return stocks;
+    }
+
+    public ArrayList<Product> getProductList() {
+        return products;
+    }
+
     /**
      * Returns an Array containing the product's name, id, and price
      * @param product Product, the product to get information on

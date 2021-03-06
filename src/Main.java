@@ -46,6 +46,22 @@ public class Main {
         printCartInfo(cart, p2);
         printCartInfo(cart, p3);
 
+        System.out.println("\n--- GETTING INVENTORY INFO ---");
+        String[][] info = store.getInventoryInfo();
+        for(int i = 0; i < info.length; i++){
+            System.out.println(info[i][0] + "|" + info[i][1] + "|" + info[i][2]);
+        }
+
+        System.out.println("\n--- GETTING CART INFO ---");
+        String[][] infoCart = store.getCartInfo(cart);
+        for(int i = 0; i < infoCart.length; i++){
+            System.out.println(infoCart[i][0] + "|" + infoCart[i][1] + "|" + infoCart[i][2]);
+        }
+
+
+
+
+
 //        System.out.println("--- TESTING PRODUCT FUNC ---");
 //        System.out.println("NAME: " + p1.getName() + ", ID: " + p1.getId() + ", PRICE $" + p1.getPrice());
 //        System.out.println("NAME: " + p2.getName() + ", ID: " + p2.getId() + ", PRICE $" + p2.getPrice());

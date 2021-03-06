@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  *  Store Manager class for managing the inventory
  *  @author Dhriti Aravind 101141942, Mika Le 101141818
@@ -52,6 +54,37 @@ public class StoreManager{
         else {
             System.out.println("Not enough stock available to remove from cart");
         }
+    }
+
+    public double checkout(){
+        double total = 0;
+        return total;
+    }
+
+    public String[][] getCartInfo(ShoppingCart cart){
+        ArrayList<Product> products = cart.getProductList();
+        ArrayList<Integer> stock = cart.getStockList();
+
+        String[][] info = new String[products.size()][stock.size()];
+        for(int i = 0; i < products.size(); i++){
+            info[i][0] = products.get(i).getName();
+            info[i][1] = Double.toString(products.get(i).getPrice());
+            info[i][2] = Integer.toString(stock.get(i));
+        }
+        return info;
+    }
+
+    public String[][] getInventoryInfo(){
+        ArrayList<Product> products = this.inventory.getProductList();
+        ArrayList<Integer> stock = this.inventory.getStockList();
+
+        String[][] info = new String[products.size()][stock.size()];
+        for(int i = 0; i < products.size(); i++){
+            info[i][0] = products.get(i).getName();
+            info[i][1] = Double.toString(products.get(i).getPrice());
+            info[i][2] = Integer.toString(stock.get(i));
+        }
+        return info;
     }
 
 
