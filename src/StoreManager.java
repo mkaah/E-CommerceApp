@@ -28,6 +28,7 @@ public class StoreManager{
         return cartID++;
     }
 
+
     public int getInvStock(int id) {
         return inventory.getStock(id);
     }
@@ -40,6 +41,7 @@ public class StoreManager{
         if(getInvStock(id) >= quantity){
             cart.addStock(inventory.getProduct(id), quantity);
             inventory.delStock(id, quantity);
+            System.out.println("The items are added to cart.");
         }
         else {
             System.out.println("Not enough stock available to add to cart");
@@ -65,11 +67,12 @@ public class StoreManager{
         ArrayList<Product> products = cart.getProductList();
         ArrayList<Integer> stock = cart.getStockList();
 
-        String[][] info = new String[products.size()][stock.size()];
+        String[][] info = new String[products.size()][stock.size() + 1];
         for(int i = 0; i < products.size(); i++){
             info[i][0] = products.get(i).getName();
             info[i][1] = Double.toString(products.get(i).getPrice());
             info[i][2] = Integer.toString(stock.get(i));
+            info[i][3] = Integer.toString(products.get(i).getId());
         }
         return info;
     }
@@ -78,11 +81,13 @@ public class StoreManager{
         ArrayList<Product> products = this.inventory.getProductList();
         ArrayList<Integer> stock = this.inventory.getStockList();
 
-        String[][] info = new String[products.size()][stock.size()];
+        String[][] info = new String[products.size()][stock.size() + 1];
+
         for(int i = 0; i < products.size(); i++){
             info[i][0] = products.get(i).getName();
             info[i][1] = Double.toString(products.get(i).getPrice());
             info[i][2] = Integer.toString(stock.get(i));
+            info[i][3] = Integer.toString(products.get(i).getId());
         }
         return info;
     }
