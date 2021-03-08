@@ -1,7 +1,7 @@
-
 /**
  * A ShoppingCart
  * @author Mika Le 101141818
+ * @version 1.0
  */
 
 public class ShoppingCart extends Inventory{
