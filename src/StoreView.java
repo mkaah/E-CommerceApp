@@ -8,13 +8,12 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class StoreView {
-    private static StoreManager store;
-    private Inventory inv;
+    private StoreManager store;
+    private ShoppingCart cart;
 
     public StoreView(StoreManager store, int cartID) {
         this.store = store;
-        inv = this.store.getInventory();
-
+        this.cart = store.getCart(cartID);
     }
 
     private void helpCommands() {
@@ -41,7 +40,7 @@ public class StoreView {
         mainMenu(stringInput());
     }
 
-    private void addItem(ShoppingCart cartID) {
+    private void addItem(ShoppingCart cart) {
         System.out.println("\n--- THE COURSE STORE ---");
         System.out.println("--- ADD TO CART ---");
         System.out.println("Type 'help' for a list of commands. \n");
@@ -54,11 +53,11 @@ public class StoreView {
         int option = intInput(info.length - 1);
         System.out.println("Enter the amount you would like to add to cart:");
 
-        store.addToCart(cartID, Integer.parseInt(info[option][3]), intInput(Integer.parseInt(info[option][2])));
+        store.addToCart(cart, Integer.parseInt(info[option][3]), intInput(Integer.parseInt(info[option][2])));
         System.out.println("--- END OF ADD TO CART ----\n");
     }
 
-    private void removeItem(ShoppingCart cartID) {
+    private void removeItem(ShoppingCart cart) {
         System.out.println("\n--- THE COURSE STORE ---");
         System.out.println("--- REMOVE FROM CART ---");
         System.out.println("Type 'help' for a list of commands. \n");
@@ -71,7 +70,7 @@ public class StoreView {
         int option = intInput(info.length - 1);
         System.out.println("Enter the amount you would like to add to cart:");
 
-        store.delFromCart(cartID, Integer.parseInt(info[option][3]), intInput(Integer.parseInt(info[option][2])));
+        store.delFromCart(cart, Integer.parseInt(info[option][3]), intInput(Integer.parseInt(info[option][2])));
         System.out.println("--- END OF REMOVE FROM CART ----\n");
     }
 
@@ -123,22 +122,21 @@ public class StoreView {
                 break;
             case("addtocart"):
                 //add to cart
-                addItem();
+                addItem(cart);
                 getInventory();
                 break;
             case ("removefromcart"):
                 //remove from cart
-                removeItem();
+                removeItem(cart);
                 getInventory();
                 break;
             case("checkout"):
                 //checkout
-                System.out.println(completePurchase());
-
+                System.out.println(completePurchase(cart));
                 break;
             case("currentcart"):
                 //print current cart
-                getCart(cart1);
+                getCart(cart);
                 getInventory();
                 break;
             case("currentinventory"):
@@ -155,9 +153,7 @@ public class StoreView {
                 System.out.println("Invalid input. Please try again. \nType: 'Help' for a full list of options");
                 mainMenu(stringInput());
                 break;
-
         }
-
     }
 
 
@@ -167,13 +163,11 @@ public class StoreView {
 
     public static void main(String[] args) {
         StoreManager sm = new StoreManager();
-        ShoppingCart cart = sm.getCart();
-
         StoreView sv1 = new StoreView(sm, sm.assignCartID());
+
         sm.getInventory().addStock(new Product("Apple", 1, 10.00), 10);
         sm.getInventory().addStock(new Product("Banana", 2, 20.00), 20);
         sm.getInventory().addStock(new Product("Orange", 3, 40.00), 30);
-
 
 
         //sv1.helpCommands();

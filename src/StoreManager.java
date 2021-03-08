@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class StoreManager{
     private Inventory inventory;
-    //private ShoppingCart cart;
     private ArrayList<ShoppingCart> carts;
     private static int cartID = 0;
 
@@ -27,7 +26,8 @@ public class StoreManager{
 
     public int assignCartID(){
         cartID++;
-        carts.add(new ShoppingCart(cartID));
+        ShoppingCart newCart = new ShoppingCart(cartID);
+        carts.add(newCart);
         return cartID;
     }
 
