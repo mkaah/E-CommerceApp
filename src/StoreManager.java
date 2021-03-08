@@ -80,16 +80,29 @@ public class StoreManager{
         System.out.println("TOTAL: $" + total + " CAD");
 
         //disconnect user or reset cart
+        emptyCart(cart);
 
         return total;
+    }
+
+    private void emptyCart(ShoppingCart cart){
+        ArrayList<Product> products = cart.getProductList();
+        ArrayList<Integer> stock = cart.getStockList();
+
+        for(Product p : products){
+            products.remove(p);
+        }
+
+        for(Integer s : stock){
+            stock.remove(s);
+        }
     }
 
     public void returnProducts(ShoppingCart cart){
         ArrayList<Product> products = cart.getProductList();
 
         for(Product p : products){
-            cart.delStock(p.getId(), getCartStock(cart, p.getId()));
-            inventory.addStock(p, getCartStock(cart, p.getId()));
+            delFromCart(cart, p.getId(), getCartStock(cart, p.getId()));
         }
     }
 
@@ -97,7 +110,7 @@ public class StoreManager{
         ArrayList<Product> products = cart.getProductList();
         ArrayList<Integer> stock = cart.getStockList();
 
-        String[][] info = new String[products.size()][stock.size() + 1];
+        String[][] info = new String[products.size()][4];
         for(int i = 0; i < products.size(); i++){
             info[i][0] = products.get(i).getName();
             info[i][1] = Double.toString(products.get(i).getPrice());

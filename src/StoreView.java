@@ -62,14 +62,13 @@ public class StoreView {
         System.out.println("--- REMOVE FROM CART ---");
         System.out.println("Type 'help' for a list of commands. \n");
         System.out.println("Stock | Name | Price | Option");
-        String[][] info = store.getInventoryInfo();
+        String[][] info = store.getCartInfo(cart);
         for(int i = 0; i < info.length; i++){
             System.out.println(info[i][2] + " | " + info[i][0] + " | $" + info[i][1] +" | ("+ i+ ")");
         }
-        System.out.println("Enter the product you would like to add to cart:");
+        System.out.println("Enter the product you would like to remove from your cart:");
         int option = intInput(info.length - 1);
-        System.out.println("Enter the amount you would like to add to cart:");
-
+        System.out.println("Enter the amount you would like to remove from your cart:");
         store.delFromCart(cart, Integer.parseInt(info[option][3]), intInput(Integer.parseInt(info[option][2])));
         System.out.println("--- END OF REMOVE FROM CART ----\n");
     }
