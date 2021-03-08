@@ -18,6 +18,22 @@ public class Inventory {
     }
 
     /**
+     * This method gives access to the list of stock
+     * @return ArrayList<Integer>, list of stock
+     */
+    public ArrayList<Integer> getStockList() {
+        return this.stocks;
+    }
+
+    /**
+     * This method gives access to the list of products
+     * @return ArrayList<Product>, list of products
+     */
+    public ArrayList<Product> getProductList() {
+        return this.products;
+    }
+
+    /**
      * Finds the index of the product within the the ArrayList of products
      * @param  id int, id of the product
      * @return    int, index of the product within the ArrayList or -1 if not found
@@ -120,14 +136,6 @@ public class Inventory {
             }
         }
         return removed;
-    }
-
-    public ArrayList<Integer> getStockList() {
-        return stocks;
-    }
-
-    public ArrayList<Product> getProductList() {
-        return products;
     }
 
     /**

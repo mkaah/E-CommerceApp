@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 /**
- *  Store Manager class for managing the inventory
+ *  A StoreManager 
  *  @author Dhriti Aravind 101141942, Mika Le 101141818
  *  @version 2.0 updated by Mika Le
  */
@@ -11,45 +11,83 @@ public class StoreManager{
     private ArrayList<ShoppingCart> carts;
     private static int cartID = 0;
 
+    /**
+     * Constructor for a StoreManager
+     */
     public StoreManager(){
         this.inventory = new Inventory();
-        carts = new ArrayList<ShoppingCart>();
+        this.carts = new ArrayList<ShoppingCart>();
     }
 
+    /**
+     * This method gives access to the inventory
+     * @return Inventory, the inventory of the StoreManager
+     */
     public Inventory getInventory() {
         return this.inventory;
     }
 
+    /**
+     * This method gives access to a ShoppingCart
+     * @param id int, the id of the cart
+     * @return   ShoppingCart, the cart associated with the id
+     */
     public ShoppingCart getCart(int id) {
         return carts.get(id - 1);
     }
 
+    /**
+     * Creates a unique cart ID, creates a ShoppingCart with that id
+     * and adds it to the list of carts
+     * @return int, unique cart id
+     */
     public int assignCartID(){
         cartID++;
-        ShoppingCart newCart = new ShoppingCart(cartID);
-        carts.add(newCart);
+        carts.add(new ShoppingCart(cartID));
         return cartID;
     }
 
+    /**
+     * This method gives access to the stock of a product within the inventory
+     * @param id int, id of the product
+     * @return   int, stock of the product
+     */
     public int getInvStock(int id) {
         return this.inventory.getStock(id);
     }
 
+    /**
+     * This method gives access to the stock of a product in the cart
+     * @param cart ShoppingCart, the cart
+     * @param id   int, id of the product
+     * @return     int, stock of the product
+     */
     public int getCartStock(ShoppingCart cart, int id){
         return cart.getStock(id);
     }
 
+    /**
+     * Adds a product to the cart
+     * @param cart      ShoppingCart, the cart to add to
+     * @param id        int, id of the product
+     * @param quantity  int, amount of stock to add
+     */
     public void addToCart(ShoppingCart cart, int id, int quantity){
         if(getInvStock(id) >= quantity){
             cart.addStock(inventory.getProduct(id), quantity);
             inventory.delStock(id, quantity);
-            System.out.println("The items are added to cart.");
         }
         else {
             System.out.println("Not enough stock available to add to cart");
         }
     }
 
+    /**
+     * Removes a product from the cart
+     * @param cart      ShoppingCart, the cart to remove from
+     * @param id        int, id of the product
+     * @param quantity  int, amount of stock to remove
+     */
     public void delFromCart(ShoppingCart cart, int id, int quantity){
         if(getCartStock(cart, id) >= quantity){
             cart.delStock(id, quantity);
@@ -60,6 +98,12 @@ public class StoreManager{
         }
     }
 
+    /**
+     * Calculates the total for the products within the cart,
+     * prints out a summary of items in the cart, and empties the cart
+     * @param cart ShoppingCart, the cart to checkout
+     * @return     double, total for the products in the cart
+     */
     public double checkout(ShoppingCart cart){
         double total = 0;
         ArrayList<Product> products = cart.getProductList(); //need this.cart??? need cart as param??
@@ -85,6 +129,10 @@ public class StoreManager{
         return total;
     }
 
+    /**
+     * Empties the cart
+     * @param cart ShoppingCart, the cart to be emptied
+     */
     private void emptyCart(ShoppingCart cart){
         ArrayList<Product> products = cart.getProductList();
         ArrayList<Integer> stock = cart.getStockList();
@@ -98,6 +146,10 @@ public class StoreManager{
         }
     }
 
+    /**
+     * Returns items from the cart back to the inventory
+     * @param cart ShoppingCart, the cart
+     */
     public void returnProducts(ShoppingCart cart){
         ArrayList<Product> products = cart.getProductList();
 
@@ -106,6 +158,12 @@ public class StoreManager{
         }
     }
 
+    /**
+     * Gives access to products in the cart. For each product, the
+     * name, price, stock, and id are provided
+     * @param cart ShoppingCart, the cart
+     * @return     String[][], all the information on each product
+     */
     public String[][] getCartInfo(ShoppingCart cart){
         ArrayList<Product> products = cart.getProductList();
         ArrayList<Integer> stock = cart.getStockList();
@@ -120,6 +178,11 @@ public class StoreManager{
         return info;
     }
 
+    /**
+     * Gives access to products in the inventory. For each product, the
+     * name, price, stock, and id are provided
+     * @return String[][], all the information on each product
+     */
     public String[][] getInventoryInfo(){
         ArrayList<Product> products = this.inventory.getProductList();
         ArrayList<Integer> stock = this.inventory.getStockList();
@@ -134,33 +197,6 @@ public class StoreManager{
         }
         return info;
     }
-
-
-
-//    public int checkStock(Product product) {
-//        return inventory.getStock(product.getId());
-//    }
-
-//    public double transaction(int[][] cart) {
-//        double total = 0;
-//        //check desired quantity exists for all products
-//        for (int[] item : cart) {
-//            if (item[1] > inventory.getStock(item[0])) {
-//                //insufficient supply
-//                System.out.println("Insufficient supply. Transaction cancelled\n");
-//                return -1;
-//            }
-//        }
-//
-//        //process transaction
-//        for (int[] item : cart) {
-//            inventory.delStock(item[0], item[1]);
-//            total += inventory.getProduct(item[0]).getPrice() * item[1];
-//        }
-//
-//        return Math.round(total * 100.0)/100.0;
-//    }
-
 
 }
 
