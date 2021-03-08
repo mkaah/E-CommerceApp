@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /**
  * A ShoppingCart
  * @author Mika Le 101141818
@@ -10,7 +8,9 @@ public class ShoppingCart extends Inventory{
     /**
      * Constructor for a ShoppingCart
      */
+    public ShoppingCart(){
 
+    }
     public ShoppingCart(int id){
         super();
         this.id = id;

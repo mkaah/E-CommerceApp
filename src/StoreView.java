@@ -1,21 +1,29 @@
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * A StoreView
+ * A StoreView class to manage the UI
+ *
  * @author Dhriti Aravind 101141942
  * @version 1.0
  */
 public class StoreView {
     private StoreManager store;
     private ShoppingCart cart;
+    public boolean done = false;
 
+    /**
+     * Constructor for store view
+     * @param store     StoreManager, current store manager
+     * @param cartID    int, id number of current cart
+     */
     public StoreView(StoreManager store, int cartID) {
         this.store = store;
         this.cart = store.getCart(cartID);
     }
 
+    /**
+     * Prints out the help menu on the console
+     */
     private void helpCommands() {
         System.out.println("\nHELP >>>");
         System.out.println("Type the appropriate commands into the command line \n");
@@ -28,18 +36,25 @@ public class StoreView {
         System.out.println("To see this menu again: 'Help'\n");
     }
 
+    /**
+     * Displays the current inventory with amounts and prices
+     */
     private void getInventory() {
         System.out.println("\n--- THE COURSE STORE ---");
         System.out.println("--- INVENTORY ---");
         System.out.println("Type 'help' for a list of commands. \n");
         System.out.println("Stock | Name | Price");
         String[][] info = store.getInventoryInfo();
-        for(int i = 0; i < info.length; i++){
-            System.out.println(info[i][2] + " | " + info[i][0] + " | $" + info[i][1]);
+        for (String[] strings : info) {
+            System.out.println(strings[2] + " | " + strings[0] + " | $" + strings[1]);
         }
         mainMenu(stringInput());
     }
 
+    /**
+     * Adds the specified item and amount to the cart
+     * @param cart      ShoppingCart, the current cart being used
+     */
     private void addItem(ShoppingCart cart) {
         System.out.println("\n--- THE COURSE STORE ---");
         System.out.println("--- ADD TO CART ---");
@@ -57,6 +72,10 @@ public class StoreView {
         System.out.println("--- END OF ADD TO CART ----\n");
     }
 
+    /**
+     * Removes the specified item and amount from the cart
+     * @param cart      ShoppingCart, the current cart being used
+     */
     private void removeItem(ShoppingCart cart) {
         System.out.println("\n--- THE COURSE STORE ---");
         System.out.println("--- REMOVE FROM CART ---");
@@ -73,6 +92,10 @@ public class StoreView {
         System.out.println("--- END OF REMOVE FROM CART ----\n");
     }
 
+    /**
+     * Displays the current contents of the cart
+     * @param cart      ShoppingCart, the current cart being used
+     */
     private void getCart(ShoppingCart cart) {
         System.out.println("\n--- THE COURSE STORE ---");
         System.out.println("\n--- CURRENT CART ---");
@@ -84,6 +107,12 @@ public class StoreView {
         System.out.println("--- END OF CURRENT CART ----\n");
     }
 
+    /**
+     * Checks if the user input is a string input and removes spaces and
+     * sets everything to lowercase.
+     *
+     * @return      String, user string, lowercase and without spaces
+     */
     private String stringInput() {
         System.out.print(">>> ");
         Scanner scanner = new Scanner(System.in);
@@ -92,7 +121,12 @@ public class StoreView {
         return s;
     }
 
-    private int intInput(int maximum) {
+    /**
+     * Checks if the user input is an int and between the ranges of 0 and maximum
+     * @param maximum      int, the maximum value the int can be
+     * @return             int, user value between 0 and maximum
+     */
+    private static int intInput(int maximum) {
         do {
             Scanner scanner = new Scanner(System.in);
             System.out.print("\n>>> ");
@@ -111,7 +145,11 @@ public class StoreView {
     }
 
 
-
+    /**
+     * Directs the user to the appropriate screen for their task
+     *
+     * @param s     String, command entered by user
+     */
     public void mainMenu(String s) {
         switch(s) {
             case("help"):
@@ -132,6 +170,7 @@ public class StoreView {
             case("checkout"):
                 //checkout
                 System.out.println(completePurchase(cart));
+                done = true;
                 break;
             case("currentcart"):
                 //print current cart
@@ -144,8 +183,9 @@ public class StoreView {
                 break;
             case("quit"):
                 //end program
-                System.out.println("ALL STORE VIEWS DEACTIVATED");
-                System.exit(0);
+                System.out.println("Quit current cart");
+                //System.exit(0);
+                done = true;
                 break;
             default:
                 //none of the above work
@@ -155,29 +195,55 @@ public class StoreView {
         }
     }
 
+    /**
+     * Completes the purchase based on the items in the cart
+     *
+     * @param cart      ShoppingCart, the current cart being used
+     * @return          double, total in dollars
+     */
+    private double completePurchase(ShoppingCart cart) {
+        return store.checkout(cart);
+    }
 
-    public double completePurchase(ShoppingCart cartID) {
-        return store.checkout(cartID);
+    /**
+     *  Ensures selected storeview is valid
+     *
+     * @param m     int, number of users
+     * @return      int, user selected input
+     */
+    public static int chooseStoreview(int m) {
+        System.out.print("CHOOSE YOUR STOREVIEW >>> ");
+        return intInput(m);
     }
 
     public static void main(String[] args) {
         StoreManager sm = new StoreManager();
         StoreView sv1 = new StoreView(sm, sm.assignCartID());
+        StoreView sv2 = new StoreView(sm, sm.assignCartID());
+        StoreView sv3 = new StoreView(sm, sm.assignCartID());
+
+        StoreView[] users = {sv1, sv2, sv3};
+        int activeSV = users.length;
 
         sm.getInventory().addStock(new Product("Apple", 1, 10.00), 10);
         sm.getInventory().addStock(new Product("Banana", 2, 20.00), 20);
         sm.getInventory().addStock(new Product("Orange", 3, 40.00), 30);
 
+        while (activeSV > 0) {
+            int choice = chooseStoreview(activeSV);
+            if (users[choice] != null) {
+                users[choice].getInventory();
+                if(users[choice].done) {
+                    users[choice] = null;
+                    activeSV--;
+                }
+            } else {
+                System.out.println("MAIN > ERROR > BAD CHOICE\nTHAT STOREVIEW WAS DEACTIVATED");
+            }
+            System.out.print("GO TO ANOTHER STOREVIEW? (y) >>> ");
 
-        //sv1.helpCommands();
-
-        sv1.getInventory();
-
-
-
-
-
+        }
+        System.out.println("ALL STOREVIEWS DEACTIVATED");
+        System.exit(0);
     }
-
-
 }
