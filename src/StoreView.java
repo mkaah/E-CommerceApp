@@ -229,7 +229,9 @@ public class StoreView {
         sm.getInventory().addStock(new Product("Banana", 2, 20.00), 20);
         sm.getInventory().addStock(new Product("Orange", 3, 40.00), 30);
 
-        while (activeSV > 0) {
+        Scanner scanner = new Scanner(System.in);
+        String newView = "";
+        while (activeSV > 0 && (newView.equals("") || newView.equals("y")||newView.equals("Y"))) {
             int choice = chooseStoreview(activeSV);
             if (users[choice] != null) {
                 users[choice].getInventory();
@@ -241,7 +243,7 @@ public class StoreView {
                 System.out.println("MAIN > ERROR > BAD CHOICE\nTHAT STOREVIEW WAS DEACTIVATED");
             }
             System.out.print("GO TO ANOTHER STOREVIEW? (y) >>> ");
-
+            newView = scanner.nextLine();
         }
         System.out.println("ALL STOREVIEWS DEACTIVATED");
         System.exit(0);
