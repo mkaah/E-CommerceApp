@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  *  Store Manager class for managing the inventory
@@ -9,35 +8,38 @@ import java.util.Scanner;
 
 public class StoreManager{
     private Inventory inventory;
-    private ShoppingCart cart;
+    //private ShoppingCart cart;
+    private ArrayList<ShoppingCart> carts;
     private static int cartID = 0;
 
     public StoreManager(){
         this.inventory = new Inventory();
-        this.cart = new ShoppingCart();
+        carts = new ArrayList<ShoppingCart>();
     }
 
     public Inventory getInventory() {
         return this.inventory;
     }
 
-    public ShoppingCart getCart() {
-        return this.cart;
+    public ShoppingCart getCart(int id) {
+        return carts.get(id - 1);
     }
 
     public int assignCartID(){
-        return cartID++;
+        cartID++;
+        carts.add(new ShoppingCart(cartID));
+        return cartID;
     }
 
     public int getInvStock(int id) {
         return this.inventory.getStock(id);
     }
 
-    public int getCartStock(int id){
-        return this.cart.getStock(id);
+    public int getCartStock(ShoppingCart cart, int id){
+        return cart.getStock(id);
     }
 
-    public void addToCart(int id, int quantity){
+    public void addToCart(ShoppingCart cart, int id, int quantity){
         if(getInvStock(id) >= quantity){
             cart.addStock(inventory.getProduct(id), quantity);
             inventory.delStock(id, quantity);
@@ -48,8 +50,8 @@ public class StoreManager{
         }
     }
 
-    public void delFromCart(int id, int quantity){
-        if(getCartStock(id) >= quantity){
+    public void delFromCart(ShoppingCart cart, int id, int quantity){
+        if(getCartStock(cart, id) >= quantity){
             cart.delStock(id, quantity);
             inventory.addStock(inventory.getProduct(id), quantity);
         }
@@ -82,12 +84,12 @@ public class StoreManager{
         return total;
     }
 
-    public void returnProducts(){
+    public void returnProducts(ShoppingCart cart){
         ArrayList<Product> products = cart.getProductList();
 
         for(Product p : products){
-            cart.delStock(p.getId(), getCartStock(p.getId()));
-            inventory.addStock(p, getCartStock(p.getId()));
+            cart.delStock(p.getId(), getCartStock(cart, p.getId()));
+            inventory.addStock(p, getCartStock(cart, p.getId()));
         }
     }
 
