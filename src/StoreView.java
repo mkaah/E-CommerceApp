@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -6,16 +8,13 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class StoreView {
-    private StoreManager store;
+    private static StoreManager store;
     private Inventory inv;
-    int cartID;
-    private ShoppingCart cart1;
 
     public StoreView(StoreManager store, int cartID) {
-        this.cartID = cartID;
         this.store = store;
         inv = this.store.getInventory();
-        cart1 = this.store.getCart();
+
     }
 
     private void helpCommands() {
@@ -42,7 +41,7 @@ public class StoreView {
         mainMenu(stringInput());
     }
 
-    private void addItem() {
+    private void addItem(ShoppingCart cartID) {
         System.out.println("\n--- THE COURSE STORE ---");
         System.out.println("--- ADD TO CART ---");
         System.out.println("Type 'help' for a list of commands. \n");
@@ -55,11 +54,11 @@ public class StoreView {
         int option = intInput(info.length - 1);
         System.out.println("Enter the amount you would like to add to cart:");
 
-        store.addToCart(Integer.parseInt(info[option][3]), intInput(Integer.parseInt(info[option][2])));
+        store.addToCart(cartID, Integer.parseInt(info[option][3]), intInput(Integer.parseInt(info[option][2])));
         System.out.println("--- END OF ADD TO CART ----\n");
     }
 
-    private void removeItem() {
+    private void removeItem(ShoppingCart cartID) {
         System.out.println("\n--- THE COURSE STORE ---");
         System.out.println("--- REMOVE FROM CART ---");
         System.out.println("Type 'help' for a list of commands. \n");
@@ -72,7 +71,7 @@ public class StoreView {
         int option = intInput(info.length - 1);
         System.out.println("Enter the amount you would like to add to cart:");
 
-        store.delFromCart(Integer.parseInt(info[option][3]), intInput(Integer.parseInt(info[option][2])));
+        store.delFromCart(cartID, Integer.parseInt(info[option][3]), intInput(Integer.parseInt(info[option][2])));
         System.out.println("--- END OF REMOVE FROM CART ----\n");
     }
 
@@ -112,6 +111,8 @@ public class StoreView {
             }
         }while (true);
     }
+
+
 
     public void mainMenu(String s) {
         switch(s) {
@@ -160,8 +161,8 @@ public class StoreView {
     }
 
 
-    public double completePurchase() {
-        return store.checkout();
+    public double completePurchase(ShoppingCart cartID) {
+        return store.checkout(cartID);
     }
 
     public static void main(String[] args) {
