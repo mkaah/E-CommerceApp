@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *  Store Manager class for managing the inventory
@@ -17,24 +18,23 @@ public class StoreManager{
     }
 
     public Inventory getInventory() {
-        return inventory;
+        return this.inventory;
     }
 
     public ShoppingCart getCart() {
-        return cart;
+        return this.cart;
     }
 
     public int assignCartID(){
         return cartID++;
     }
 
-
     public int getInvStock(int id) {
-        return inventory.getStock(id);
+        return this.inventory.getStock(id);
     }
 
     public int getCartStock(int id){
-        return cart.getStock(id);
+        return this.cart.getStock(id);
     }
 
     public void addToCart(int id, int quantity){
@@ -58,9 +58,37 @@ public class StoreManager{
         }
     }
 
-    public double checkout(){
+    public double checkout(ShoppingCart cart){
         double total = 0;
+        ArrayList<Product> products = cart.getProductList(); //need this.cart??? need cart as param??
+        ArrayList<Integer> stock = cart.getStockList();
+        String[][] infoCart = getCartInfo(cart);
+
+        //calculate total
+        for(int i = 0; i < products.size(); i++){
+            total += products.get(i).getPrice() * stock.get(i);
+        }
+        total = Math.round(total * 100.0)/100.0;
+
+        //print summary of cart
+        System.out.println("YOUR CART:");
+        for(int i = 0; i < infoCart.length; i++){
+            System.out.println(infoCart[i][0] + " | $" + infoCart[i][1] + " | x" + infoCart[i][2]);
+        }
+        System.out.println("TOTAL: $" + total + " CAD");
+
+        //disconnect user or reset cart
+
         return total;
+    }
+
+    public void returnProducts(){
+        ArrayList<Product> products = cart.getProductList();
+
+        for(Product p : products){
+            cart.delStock(p.getId(), getCartStock(p.getId()));
+            inventory.addStock(p, getCartStock(p.getId()));
+        }
     }
 
     public String[][] getCartInfo(ShoppingCart cart){
