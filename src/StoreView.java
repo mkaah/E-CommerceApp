@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * A StoreView class to manage the UI
+ * A StoreView class to manage the UI of the store.
  *
  * @author Dhriti Aravind 101141942
  * @version 1.0
@@ -95,7 +95,11 @@ public class StoreView {
         System.out.println("/--------------- END OF REMOVE FROM CART ---------------/\n");
     }
 
-    private void quitP(ShoppingCart cart) {
+    /**
+     * Returns all items to shelf if the user does not checkout.
+     * @param cart      ShoppingCart, the current cart being used
+     */
+    private void quitView(ShoppingCart cart) {
         String[][] info = store.getCartInfo(cart);
 
         for(int i = 0; i < info.length; i++){
@@ -197,7 +201,7 @@ public class StoreView {
                 break;
             case("quit"):
                 //end program
-                quitP(cart);
+                quitView(cart);
                 System.out.println("Quit current cart");
                 done = true;
                 break;

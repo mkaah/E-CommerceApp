@@ -123,40 +123,10 @@ public class StoreManager{
         }
         System.out.println("TOTAL: $" + total + " CAD");
 
-        //disconnect user or reset cart
-        emptyCart(cart);
 
         return total;
     }
 
-    /**
-     * Empties the cart
-     * @param cart ShoppingCart, the cart to be emptied
-     */
-    private void emptyCart(ShoppingCart cart){
-        ArrayList<Product> products = cart.getProductList();
-        ArrayList<Integer> stock = cart.getStockList();
-
-        for(Product p : products){
-            products.remove(p);
-        }
-
-        for(Integer s : stock){
-            stock.remove(s);
-        }
-    }
-
-    /**
-     * Returns items from the cart back to the inventory
-     * @param cart ShoppingCart, the cart
-     */
-    public void returnProducts(ShoppingCart cart){
-        ArrayList<Product> products = cart.getProductList();
-
-        for(Product p : products){
-            delFromCart(cart, p.getId(), getCartStock(cart, p.getId()));
-        }
-    }
 
     /**
      * Gives access to products in the cart. For each product, the

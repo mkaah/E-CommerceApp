@@ -1,7 +1,7 @@
 /**
  * A Product
  * @author Dhriti Aravind 101141942, Mika Le 101141818
- * @version 1.0
+ * @version 2.0
  */
 public class Product {
     private final String NAME;
