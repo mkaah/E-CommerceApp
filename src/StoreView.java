@@ -31,24 +31,27 @@ public class StoreView {
         System.out.println("To remove items from cart: 'Remove from cart'");
         System.out.println("View items in cart: 'Current cart'");
         System.out.println("View items in inventory: 'Current Inventory'");
+        System.out.println("Switch Storeview: 'Switch Cart'");
         System.out.println("Checkout items: 'Checkout'");
         System.out.println("Quit Program: 'Quit'");
-        System.out.println("To see this menu again: 'Help'\n");
+        System.out.println("To see this menu again: 'Help'");
     }
 
     /**
      * Displays the current inventory with amounts and prices
      */
     private void getInventory() {
-        System.out.println("\n--- THE COURSE STORE ---");
-        System.out.println("--- INVENTORY ---");
+        System.out.println("\n|--------------- THE COURSE STORE ---------------|");
+        System.out.println("/--------------- INVENTORY --------------/");
         System.out.println("Type 'help' for a list of commands. \n");
         System.out.println("Stock | Name | Price");
         String[][] info = store.getInventoryInfo();
         for (String[] strings : info) {
             System.out.println(strings[2] + " | " + strings[0] + " | $" + strings[1]);
         }
+        System.out.println("Enter a command...");
         mainMenu(stringInput());
+
     }
 
     /**
@@ -56,8 +59,8 @@ public class StoreView {
      * @param cart      ShoppingCart, the current cart being used
      */
     private void addItem(ShoppingCart cart) {
-        System.out.println("\n--- THE COURSE STORE ---");
-        System.out.println("--- ADD TO CART ---");
+        System.out.println("\n|--------------- THE COURSE STORE ---------------|");
+        System.out.println("/--------------- ADD TO CART ---------------/");
         System.out.println("Type 'help' for a list of commands. \n");
         System.out.println("Stock | Name | Price | Option");
         String[][] info = store.getInventoryInfo();
@@ -69,7 +72,7 @@ public class StoreView {
         System.out.println("Enter the amount you would like to add to cart:");
 
         store.addToCart(cart, Integer.parseInt(info[option][3]), intInput(Integer.parseInt(info[option][2])));
-        System.out.println("--- END OF ADD TO CART ----\n");
+        System.out.println("/--------------- END OF ADD TO CART ---------------/\n");
     }
 
     /**
@@ -77,8 +80,8 @@ public class StoreView {
      * @param cart      ShoppingCart, the current cart being used
      */
     private void removeItem(ShoppingCart cart) {
-        System.out.println("\n--- THE COURSE STORE ---");
-        System.out.println("--- REMOVE FROM CART ---");
+        System.out.println("\n|--------------- THE COURSE STORE ---------------|");
+        System.out.println("/--------------- REMOVE FROM CART ---------------/");
         System.out.println("Type 'help' for a list of commands. \n");
         System.out.println("Stock | Name | Price | Option");
         String[][] info = store.getCartInfo(cart);
@@ -89,7 +92,15 @@ public class StoreView {
         int option = intInput(info.length - 1);
         System.out.println("Enter the amount you would like to remove from your cart:");
         store.delFromCart(cart, Integer.parseInt(info[option][3]), intInput(Integer.parseInt(info[option][2])));
-        System.out.println("--- END OF REMOVE FROM CART ----\n");
+        System.out.println("/--------------- END OF REMOVE FROM CART ---------------/\n");
+    }
+
+    private void quitP(ShoppingCart cart) {
+        String[][] info = store.getCartInfo(cart);
+
+        for(int i = 0; i < info.length; i++){
+            store.delFromCart(cart, Integer.parseInt(info[i][3]), Integer.parseInt(info[i][2]));
+        }
     }
 
     /**
@@ -97,14 +108,14 @@ public class StoreView {
      * @param cart      ShoppingCart, the current cart being used
      */
     private void getCart(ShoppingCart cart) {
-        System.out.println("\n--- THE COURSE STORE ---");
-        System.out.println("\n--- CURRENT CART ---");
+        System.out.println("\n|--------------- THE COURSE STORE ---------------|");
+        System.out.println("/--------------- CURRENT CART ---------------/");
         System.out.println("\n Stock | Name | Price");
         String[][] info = store.getCartInfo(cart);
         for(int i = 0; i < info.length; i++){
             System.out.println(info[i][2] + " | " + info[i][0] + " | $" + info[i][1]);
         }
-        System.out.println("--- END OF CURRENT CART ----\n");
+        System.out.println("-/--------------- END OF CURRENT CART ---------------/\n");
     }
 
     /**
@@ -114,7 +125,7 @@ public class StoreView {
      * @return      String, user string, lowercase and without spaces
      */
     private String stringInput() {
-        System.out.print(">>> ");
+        System.out.print("\n>>> ");
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine().toLowerCase();
         s = s.replaceAll("\\s+","");
@@ -135,7 +146,7 @@ public class StoreView {
                 if (n <= maximum && n >= 0) {
                     return n;
                 } else {
-                    System.out.println("Please enter a valid numerical input");
+                    System.out.println("Please enter a valid numerical input between the appropriate range");
                 }
             }
             else {
@@ -169,7 +180,8 @@ public class StoreView {
                 break;
             case("checkout"):
                 //checkout
-                System.out.println(completePurchase(cart));
+
+                System.out.println("TOTAL: $" + completePurchase(cart) + " CAD");
                 done = true;
                 break;
             case("currentcart"):
@@ -177,14 +189,16 @@ public class StoreView {
                 getCart(cart);
                 getInventory();
                 break;
-            case("currentinventory"):
+            case("inventory"):
                 //print current inventory
                 getInventory();
                 break;
+            case("switchview"):
+                break;
             case("quit"):
                 //end program
+                quitP(cart);
                 System.out.println("Quit current cart");
-                //System.exit(0);
                 done = true;
                 break;
             default:
@@ -212,7 +226,9 @@ public class StoreView {
      * @return      int, user selected input
      */
     public static int chooseStoreview(int m) {
-        System.out.print("CHOOSE YOUR STOREVIEW >>> ");
+        System.out.print("CHOOSE YOUR STOREVIEW: ");
+
+
         return intInput(m);
     }
 
@@ -232,8 +248,9 @@ public class StoreView {
         Scanner scanner = new Scanner(System.in);
         String newView = "";
         while (activeSV > 0 && (newView.equals("") || newView.equals("y")||newView.equals("Y"))) {
-            int choice = chooseStoreview(activeSV);
+            int choice = chooseStoreview(activeSV-1);
             if (users[choice] != null) {
+                System.out.print("CART >>> "+choice);
                 users[choice].getInventory();
                 if(users[choice].done) {
                     users[choice] = null;

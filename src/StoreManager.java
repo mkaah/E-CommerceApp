@@ -77,15 +77,15 @@ public class StoreManager{
         for(int i = 0; i < infoCart.length; i++){
             System.out.println(infoCart[i][0] + " | $" + infoCart[i][1] + " | x" + infoCart[i][2]);
         }
-        System.out.println("TOTAL: $" + total + " CAD");
+
 
         //disconnect user or reset cart
-        emptyCart(cart);
+        //emptyCart(cart);
 
         return total;
     }
 
-    private void emptyCart(ShoppingCart cart){
+   /*private void emptyCart(ShoppingCart cart){
         ArrayList<Product> products = cart.getProductList();
         ArrayList<Integer> stock = cart.getStockList();
 
@@ -104,7 +104,7 @@ public class StoreManager{
         for(Product p : products){
             delFromCart(cart, p.getId(), getCartStock(cart, p.getId()));
         }
-    }
+    }*/
 
     public String[][] getCartInfo(ShoppingCart cart){
         ArrayList<Product> products = cart.getProductList();
