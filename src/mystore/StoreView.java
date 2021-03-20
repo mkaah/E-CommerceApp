@@ -1,3 +1,5 @@
+package mystore;
+
 import java.util.Scanner;
 
 /**
@@ -13,7 +15,7 @@ public class StoreView {
 
     /**
      * Constructor for store view
-     * @param store     StoreManager, current store manager
+     * @param store     mystore.StoreManager, current store manager
      * @param cartID    int, id number of current cart
      */
     public StoreView(StoreManager store, int cartID) {
@@ -30,7 +32,7 @@ public class StoreView {
         System.out.println("To add items to cart: 'Add to cart'");
         System.out.println("To remove items from cart: 'Remove from cart'");
         System.out.println("View items in cart: 'Current cart'");
-        System.out.println("View items in inventory: 'Current Inventory'");
+        System.out.println("View items in inventory: 'Current mystore.Inventory'");
         System.out.println("Switch Storeview: 'Switch Cart'");
         System.out.println("Checkout items: 'Checkout'");
         System.out.println("Quit Program: 'Quit'");
@@ -56,7 +58,7 @@ public class StoreView {
 
     /**
      * Adds the specified item and amount to the cart
-     * @param cart      ShoppingCart, the current cart being used
+     * @param cart      mystore.ShoppingCart, the current cart being used
      */
     private void addItem(ShoppingCart cart) {
         System.out.println("\n|--------------- THE COURSE STORE ---------------|");
@@ -77,7 +79,7 @@ public class StoreView {
 
     /**
      * Removes the specified item and amount from the cart
-     * @param cart      ShoppingCart, the current cart being used
+     * @param cart      mystore.ShoppingCart, the current cart being used
      */
     private void removeItem(ShoppingCart cart) {
         System.out.println("\n|--------------- THE COURSE STORE ---------------|");
@@ -97,7 +99,7 @@ public class StoreView {
 
     /**
      * Returns all items to shelf if the user does not checkout.
-     * @param cart      ShoppingCart, the current cart being used
+     * @param cart      mystore.ShoppingCart, the current cart being used
      */
     private void quitView(ShoppingCart cart) {
         String[][] info = store.getCartInfo(cart);
@@ -109,7 +111,7 @@ public class StoreView {
 
     /**
      * Displays the current contents of the cart
-     * @param cart      ShoppingCart, the current cart being used
+     * @param cart      mystore.ShoppingCart, the current cart being used
      */
     private void getCart(ShoppingCart cart) {
         System.out.println("\n|--------------- THE COURSE STORE ---------------|");
@@ -216,7 +218,7 @@ public class StoreView {
     /**
      * Completes the purchase based on the items in the cart
      *
-     * @param cart      ShoppingCart, the current cart being used
+     * @param cart      mystore.ShoppingCart, the current cart being used
      * @return          double, total in dollars
      */
     private double completePurchase(ShoppingCart cart) {

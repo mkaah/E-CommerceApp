@@ -1,5 +1,7 @@
+package mystore;
+
 /**
- * A ShoppingCart
+ * A mystore.ShoppingCart
  * @author Mika Le 101141818
  * @version 1.0
  */
@@ -7,7 +9,7 @@
 public class ShoppingCart extends Inventory{
     private int id;
     /**
-     * Constructor for a ShoppingCart
+     * Constructor for a mystore.ShoppingCart
      * @param id int, id of the cart
      */
     public ShoppingCart(int id){
