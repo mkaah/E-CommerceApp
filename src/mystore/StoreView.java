@@ -247,9 +247,7 @@ public class StoreView {
         StoreView[] users = {sv1, sv2, sv3};
         int activeSV = users.length;
 
-        sm.getInventory().addStock(new Product("Apple", 1, 10.00), 10);
-        sm.getInventory().addStock(new Product("Banana", 2, 20.00), 20);
-        sm.getInventory().addStock(new Product("Orange", 3, 40.00), 30);
+       //sm.getInventory().initialize();
 
         Scanner scanner = new Scanner(System.in);
         String newView = "";
