@@ -42,7 +42,7 @@ public class Main {
         printCartInfo(cart2, p2);
         printCartInfo(cart2, p3);
 
-        System.out.println("mystore.Inventory -- Stock | Name | ID | Price");
+        System.out.println("Inventory -- Stock | Name | ID | Price");
         printInvInfo(inv, p1);
         printInvInfo(inv, p2);
         printInvInfo(inv, p3);
@@ -61,9 +61,7 @@ public class Main {
         printInvInfo(inv, p3);
 
 
-
-
-//        System.out.println("mystore.Inventory -- Stock | Name | ID | Price");
+//        System.out.println("Inventory -- Stock | Name | ID | Price");
 //        printInvInfo(inv, p1);
 //        printInvInfo(inv, p2);
 //        printInvInfo(inv, p3);
@@ -77,7 +75,7 @@ public class Main {
 //        store.delFromCart(2, 3);
 //        store.delFromCart(3, 3);
 //
-//        System.out.println("mystore.Inventory -- Stock | Name | ID | Price");
+//        System.out.println("Inventory -- Stock | Name | ID | Price");
 //        printInvInfo(inv, p1);
 //        printInvInfo(inv, p2);
 //        printInvInfo(inv, p3);
@@ -117,7 +115,7 @@ public class Main {
 //        inv.addStock(p3, 2);
 //
 //        //APPLE SHOULD WORK
-//        System.out.println("mystore.Product: " + inv.getProduct(1));
+//        System.out.println("Product: " + inv.getProduct(1));
 //        System.out.println("Name: " + inv.getProdName(1));
 //        System.out.println("Price: " + inv.getProdPrice(1));
 //        System.out.println("Stock: " + inv.getStock(1));
@@ -127,11 +125,11 @@ public class Main {
 //        System.out.println("Removed 5 Stock: " + inv.getStock(1));
 //        inv.delStock(1, 20);
 //        System.out.println("Try to remove 20 Stock: " + inv.getStock(1));
-//        System.out.println("mystore.Product Information: " + inv.getInformation(p1)[0] + " " + inv.getInformation(p1)[1] + " " + inv.getInformation(p1)[2]);
+//        System.out.println("Product Information: " + inv.getInformation(p1)[0] + " " + inv.getInformation(p1)[1] + " " + inv.getInformation(p1)[2]);
 //
 //        //NOT SUPPOSED TO WORK
 //        System.out.println("\nNOT SUPPOSED TO WORK");
-//        System.out.println("mystore.Product: " + inv.getProduct(4));
+//        System.out.println("Product: " + inv.getProduct(4));
 //        System.out.println("Name: " + inv.getProdName(4));
 //        System.out.println("Price: " + inv.getProdPrice(4));
 //        System.out.println("Stock: " + inv.getStock(4));
@@ -171,7 +169,7 @@ public class Main {
     }
 
     private static void printInvInfo(Inventory inv, Product p){
-        System.out.println("mystore.Inventory: " + inv.getStock(p.getId()) +"|" + inv.getInformation(p)[0] + "|" + inv.getInformation(p)[1] + "|" + inv.getInformation(p)[2]);
+        System.out.println("Inventory: " + inv.getStock(p.getId()) +"|" + inv.getInformation(p)[0] + "|" + inv.getInformation(p)[1] + "|" + inv.getInformation(p)[2]);
     }
 
     private static void printCartInfo(ShoppingCart cart, Product p){

@@ -3,7 +3,7 @@ package mystore;
 import java.util.ArrayList;
 
 /**
- *  A mystore.StoreManager
+ *  A StoreManager
  *  @author Dhriti Aravind 101141942, Mika Le 101141818
  *  @version 2.0 updated by Mika Le
  */
@@ -14,7 +14,7 @@ public class StoreManager{
     private static int cartID = 0;
 
     /**
-     * Constructor for a mystore.StoreManager
+     * Constructor for a StoreManager
      */
     public StoreManager(){
         this.inventory = new Inventory();
@@ -23,23 +23,23 @@ public class StoreManager{
 
     /**
      * This method gives access to the inventory
-     * @return mystore.Inventory, the inventory of the mystore.StoreManager
+     * @return Inventory, the inventory of the StoreManager
      */
     public Inventory getInventory() {
         return this.inventory;
     }
 
     /**
-     * This method gives access to a mystore.ShoppingCart
+     * This method gives access to a ShoppingCart
      * @param id int, the id of the cart
-     * @return   mystore.ShoppingCart, the cart associated with the id
+     * @return   ShoppingCart, the cart associated with the id
      */
     public ShoppingCart getCart(int id) {
         return carts.get(id - 1);
     }
 
     /**
-     * Creates a unique cart ID, creates a mystore.ShoppingCart with that id
+     * Creates a unique cart ID, creates a ShoppingCart with that id
      * and adds it to the list of carts
      * @return int, unique cart id
      */
@@ -60,7 +60,7 @@ public class StoreManager{
 
     /**
      * This method gives access to the stock of a product in the cart
-     * @param cart mystore.ShoppingCart, the cart
+     * @param cart ShoppingCart, the cart
      * @param id   int, id of the product
      * @return     int, stock of the product
      */
@@ -70,7 +70,7 @@ public class StoreManager{
 
     /**
      * Adds a product to the cart
-     * @param cart      mystore.ShoppingCart, the cart to add to
+     * @param cart      ShoppingCart, the cart to add to
      * @param id        int, id of the product
      * @param quantity  int, amount of stock to add
      */
@@ -86,7 +86,7 @@ public class StoreManager{
 
     /**
      * Removes a product from the cart
-     * @param cart      mystore.ShoppingCart, the cart to remove from
+     * @param cart      ShoppingCart, the cart to remove from
      * @param id        int, id of the product
      * @param quantity  int, amount of stock to remove
      */
@@ -103,7 +103,7 @@ public class StoreManager{
     /**
      * Calculates the total for the products within the cart,
      * prints out a summary of items in the cart, and empties the cart
-     * @param cart mystore.ShoppingCart, the cart to checkout
+     * @param cart ShoppingCart, the cart to checkout
      * @return     double, total for the products in the cart
      */
     public double checkout(ShoppingCart cart){
@@ -133,7 +133,7 @@ public class StoreManager{
     /**
      * Gives access to products in the cart. For each product, the
      * name, price, stock, and id are provided
-     * @param cart mystore.ShoppingCart, the cart
+     * @param cart ShoppingCart, the cart
      * @return     String[][], all the information on each product
      */
     public String[][] getCartInfo(ShoppingCart cart){

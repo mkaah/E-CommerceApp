@@ -3,7 +3,7 @@ package mystore;
 import java.util.ArrayList;
 
 /**
- * An mystore.Inventory
+ * An Inventory
  * @author Dhriti Aravind 101141942, Mika Le 101141818
  * @version 1.0
  */
@@ -12,7 +12,7 @@ public class Inventory {
     private ArrayList<Integer> stocks;   //Amount of stock available for each product
 
     /**
-     * Constructor for an mystore.Inventory
+     * Constructor for an Inventory
      */
     public Inventory() {
         this.products = new ArrayList<>();
@@ -29,7 +29,7 @@ public class Inventory {
 
     /**
      * This method gives access to the list of products
-     * @return ArrayList<mystore.Product>, list of products
+     * @return ArrayList<Product>, list of products
      */
     public ArrayList<Product> getProductList() {
         return this.products;
@@ -50,9 +50,9 @@ public class Inventory {
     }
 
     /**
-     * This method returns a mystore.Product given it's id
+     * This method returns a Product given it's id
      * @param id int, id of the product
-     * @return   mystore.Product, the product (if it does not exist, null is returned)
+     * @return   Product, the product (if it does not exist, null is returned)
      */
     public Product getProduct(int id) {
         if (getProdIndex(id) != -1) { //product exists
@@ -63,9 +63,9 @@ public class Inventory {
     }
 
     /**
-     * This method gives access to the name of the mystore.Product
+     * This method gives access to the name of the Product
      * @param id int, id of the product
-     * @return   String, name of the mystore.Product (if it does not exist, null is returned)
+     * @return   String, name of the Product (if it does not exist, null is returned)
      */
     public String getProdName(int id) {
         if (getProdIndex(id) != -1) {
@@ -76,9 +76,9 @@ public class Inventory {
     }
 
     /**
-     * This method gives access to the name of the mystore.Product
+     * This method gives access to the name of the Product
      * @param id int, id of the product
-     * @return   double, price of the mystore.Product (returns -1 if the product DNE)
+     * @return   double, price of the Product (returns -1 if the product DNE)
      */
     public double getProdPrice(int id) {
         if (getProdIndex(id) != -1) {
@@ -90,7 +90,7 @@ public class Inventory {
 
      /**
      * Gets the amount of stock available for a given product
-     * @param id int, id of the mystore.Product
+     * @param id int, id of the Product
      * @return   int, amount of stock available (returns -1 if the product DNE)
      */
     public int getStock(int id) {
@@ -104,7 +104,7 @@ public class Inventory {
 
     /**
      * Add stock to the inventory for a given product
-     * @param product mystore.Product, the product to be added
+     * @param product Product, the product to be added
      * @param stock   int, the amount of stock to be added
      */
     public void addStock(Product product, int stock) {
@@ -138,7 +138,7 @@ public class Inventory {
 
     /**
      * Returns an Array containing the product's name, id, and price
-     * @param product mystore.Product, the product to get information on
+     * @param product Product, the product to get information on
      * @return        String[], Array containing the product's name, id, and price
      */
     public String[] getInformation(Product product) {
