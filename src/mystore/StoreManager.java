@@ -19,6 +19,7 @@ public class StoreManager{
     public StoreManager(){
         this.inventory = new Inventory();
         this.carts = new ArrayList<ShoppingCart>();
+        this.inventory.initialize();
     }
 
     /**
@@ -36,6 +37,10 @@ public class StoreManager{
      */
     public ShoppingCart getCart(int id) {
         return carts.get(id - 1);
+    }
+
+    public ArrayList<ShoppingCart> getCarts() {
+        return this.carts;
     }
 
     /**
@@ -78,9 +83,6 @@ public class StoreManager{
         if(getInvStock(id) >= quantity){
             cart.addStock(inventory.getProduct(id), quantity);
             inventory.delStock(id, quantity);
-        }
-        else {
-            System.out.println("Not enough stock available to add to cart");
         }
     }
 

@@ -13,7 +13,8 @@ public class ShoppingCart extends Inventory{
      * @param id int, id of the cart
      */
     public ShoppingCart(int id){
-        super();
+        //super();
+
         this.id = id;
     }
 

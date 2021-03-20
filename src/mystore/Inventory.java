@@ -17,7 +17,7 @@ public class Inventory {
     public Inventory() {
         this.products = new ArrayList<>();
         this.stocks = new ArrayList<>();
-        initialize();
+        //initialize();
     }
 
     /**
@@ -146,7 +146,7 @@ public class Inventory {
         return new String[]{product.getName(), String.valueOf(product.getId()), String.valueOf(product.getPrice())};
     }
 
-    private void initialize(){
+    public void initialize(){
         this.addStock(new Product("Apple", 1, 10.00), 10);
         this.addStock(new Product("Banana", 2, 20.00), 20);
         this.addStock(new Product("Orange", 3, 40.00), 30);
