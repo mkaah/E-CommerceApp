@@ -152,5 +152,4 @@ public class Inventory {
         this.addStock(new Product("Orange", 3, 40.00), 30);
     }
 
-
 }

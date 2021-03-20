@@ -97,9 +97,6 @@ public class StoreManager{
             cart.delStock(id, quantity);
             inventory.addStock(inventory.getProduct(id), quantity);
         }
-        else {
-            System.out.println("Not enough stock available to remove from cart");
-        }
     }
 
     /**
@@ -123,10 +120,8 @@ public class StoreManager{
         //print summary of cart
         System.out.println("YOUR CART:");
         for(int i = 0; i < infoCart.length; i++){
-            System.out.println(infoCart[i][0] + " | $" + infoCart[i][1] + " | x" + infoCart[i][2]);
+            System.out.println(infoCart[i][0] + " | $" + infoCart[i][1] + " | " + infoCart[i][2]);
         }
-        System.out.println("TOTAL: $" + total + " CAD");
-
 
         return total;
     }
