@@ -10,16 +10,28 @@ import mystore.Inventory;
 
 import java.util.ArrayList;
 
+/**
+ * This class tests functions in Inventory
+ * @author Dhriti Aravind 101141942
+ * @version 1.0
+ */
 
 public class InventoryTest {
     private static Inventory inventory;
 
+    /**
+     * Instantiates an Inventory object
+     * Initializes the inventory and adds in some items to the inventory
+     */
     @BeforeEach
     public void init() {
         inventory = new Inventory();
         inventory.initialize();
     }
 
+    /**
+     * Tests getStockList()
+     */
     @Test
     public void testGetStockList() {
         //assertArrayEquals(inventory.getStockList(), inventory.)
@@ -34,15 +46,15 @@ public class InventoryTest {
          ArrayList<Product> list =  inventory.getProductList();
          assertEquals(1, list.get(0).getId(),"getProductList() does not return the correct product");
          assertEquals("Apple", list.get(0).getName(),"getProductList() does not return the correct product");
-         assertEquals(10.00, list.get(0).getPrice(),"getProductList() does not return the correct product");
+         assertEquals(1.00, list.get(0).getPrice(),"getProductList() does not return the correct product");
 
          assertEquals(2, list.get(1).getId(),"getProductList() does not return the correct product");
          assertEquals("Banana", list.get(1).getName(),"getProductList() does not return the correct product");
-         assertEquals(20.00, list.get(1).getPrice(),"getProductList() does not return the correct product");
+         assertEquals(2.00, list.get(1).getPrice(),"getProductList() does not return the correct product");
 
         assertEquals(3, list.get(2).getId(),"getProductList() does not return the correct product");
         assertEquals("Orange", list.get(2).getName(),"getProductList() does not return the correct product");
-        assertEquals(40.00, list.get(2).getPrice(),"getProductList() does not return the correct product");
+        assertEquals(4.00, list.get(2).getPrice(),"getProductList() does not return the correct product");
     }
 
     @Test
@@ -55,15 +67,15 @@ public class InventoryTest {
     public void testGetProduct() {
         assertEquals(1, inventory.getProduct(1).getId(), "getProduct(int id) does not return the correct id");
         assertEquals("Apple", inventory.getProduct(1).getName(),  "getProduct(int id) does not return the correct name");
-        assertEquals(10.00, inventory.getProduct(1).getPrice(), "getProduct(int id) does not return the correct price");
+        assertEquals(1.00, inventory.getProduct(1).getPrice(), "getProduct(int id) does not return the correct price");
 
         assertEquals(2, inventory.getProduct(2).getId(),  "getProduct(int id) does not return the correct id");
         assertEquals("Banana", inventory.getProduct(2).getName(),   "getProduct(int id) does not return the correct name");
-        assertEquals(20.00, inventory.getProduct(2).getPrice(), "getProduct(int id) does not return the correct price");
+        assertEquals(2.00, inventory.getProduct(2).getPrice(), "getProduct(int id) does not return the correct price");
 
         assertEquals(3, inventory.getProduct(3).getId(), "getProduct(int id) does not return the correct id");
         assertEquals("Orange", inventory.getProduct(3).getName(), "getProduct(int id) does not return the correct name");
-        assertEquals(40.00, inventory.getProduct(3).getPrice(), "getProduct(int id) does not return the correct price");
+        assertEquals(4.00, inventory.getProduct(3).getPrice(), "getProduct(int id) does not return the correct price");
     }
 
     @Test
@@ -75,9 +87,9 @@ public class InventoryTest {
 
     @Test
     public void testGetProdPrice() {
-        assertEquals(10.00, inventory.getProdPrice(1),  "getProdPrice(int id) does not return the correct price");
-        assertEquals(20.00, inventory.getProdPrice(2), "getProdPrice(int id) does not return the correct price");
-        assertEquals(40.00, inventory.getProdPrice(3),  "getProdPrice(int id) does not return the correct price");
+        assertEquals(1.00, inventory.getProdPrice(1),  "getProdPrice(int id) does not return the correct price");
+        assertEquals(2.00, inventory.getProdPrice(2), "getProdPrice(int id) does not return the correct price");
+        assertEquals(4.00, inventory.getProdPrice(3),  "getProdPrice(int id) does not return the correct price");
     }
 
     @Test
