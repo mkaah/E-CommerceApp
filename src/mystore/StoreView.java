@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class StoreView {
     private StoreManager store;
     private ShoppingCart cart;
-    public boolean done = false;
+    private boolean done = false;
 
     /**
      * Constructor for store view

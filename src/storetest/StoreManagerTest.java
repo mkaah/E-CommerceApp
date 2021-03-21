@@ -180,7 +180,7 @@ public class StoreManagerTest {
         sm.addToCart(cart,2,4);
         sm.addToCart(cart,3,6);
 
-        assertEquals(340.0, sm.checkout(cart), "Checkout returns the incorrect total");
+        assertEquals(34.0, sm.checkout(cart), "Checkout returns the incorrect total");
     }
 
     /**
@@ -194,7 +194,7 @@ public class StoreManagerTest {
         sm.addToCart(cart,2,4);
         sm.addToCart(cart,3,6);
 
-        String[][] expected = {{"Apple","10.0","2","1"},{"Banana","20.0","4","2"},{"Orange","40.0","6","3"}};
+        String[][] expected = {{"Apple","1.0","2","1"},{"Banana","2.0","4","2"},{"Orange","4.0","6","3"}};
         assertArrayEquals(expected, sm.getCartInfo(cart), "Cart does not return correct information");
     }
 
@@ -204,7 +204,7 @@ public class StoreManagerTest {
      */
     @Test
     public void testGetInventoryInfo(){
-        String[][] expected = {{"Apple","10.0","10","1"},{"Banana","20.0","20","2"},{"Orange","40.0","30","3"}};
+        String[][] expected = {{"Apple","1.0","10","1"},{"Banana","2.0","20","2"},{"Orange","4.0","30","3"}};
         assertArrayEquals(expected, sm.getInventoryInfo(), "Inventory does not return correct information");
     }
 

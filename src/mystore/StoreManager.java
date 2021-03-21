@@ -39,9 +39,11 @@ public class StoreManager{
         return carts.get(id - 1);
     }
 
-    public ArrayList<ShoppingCart> getCarts() {
-        return this.carts;
-    }
+    /**
+     * This method gives access to the list of ShoppingCart
+     * @return ArrayList<ShoppingCart>, list of all carts being managed
+     */
+    public ArrayList<ShoppingCart> getCarts() { return this.carts; }
 
     /**
      * Creates a unique cart ID, creates a ShoppingCart with that id

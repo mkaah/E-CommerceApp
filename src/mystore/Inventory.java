@@ -146,9 +146,9 @@ public class Inventory {
      * This method adds some default stock to the inventory
      */
     public void initialize(){
-        this.addStock(new Product("Apple", 1, 10.00), 10);
-        this.addStock(new Product("Banana", 2, 20.00), 20);
-        this.addStock(new Product("Orange", 3, 40.00), 30);
+        this.addStock(new Product("Apple", 1, 1.00), 10);
+        this.addStock(new Product("Banana", 2, 2.00), 20);
+        this.addStock(new Product("Orange", 3, 4.00), 30);
     }
 
 }
