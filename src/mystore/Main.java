@@ -10,55 +10,55 @@ public class Main {
         ShoppingCart cart1 = store.getCart(1);
         ShoppingCart cart2 = store.getCart(2);
 
-        Product p1 = new Product("Apple", 1, 1.00);
-        Product p2 = new Product("Banana", 2, 2.00);
-        Product p3 = new Product("Orange", 3, 4.00);
 
-        inv.addStock(p1, 10);
-        inv.addStock(p2, 10);
-        inv.addStock(p3, 10);
+//        inv.initialize();
+//        p1 =
+//
+//        System.out.println(p1.getId());
+//        System.out.println(p2.getId());
+//        System.out.println(p3.getId());
 
-        System.out.println("\n--- ORIGINAL INVENTORY ---");
-        printInvInfo(inv, p1);
-        printInvInfo(inv, p2);
-        printInvInfo(inv, p3);
-
-        System.out.println("\n--- ADDING TO CART ---");
-        store.addToCart(cart1,1, 2);
-        store.addToCart(cart1,1, 10); //should not work
-        store.addToCart(cart1,2, 5);
-        store.addToCart(cart1,3, 5);
-
-        store.addToCart(cart2,1,5);
-        store.addToCart(cart2,2,3);
-        store.addToCart(cart2,3,1);
-
-        System.out.println("\nCart -- Stock | Name | ID | Price");
-        printCartInfo(cart1, p1);
-        printCartInfo(cart1, p2);
-        printCartInfo(cart1, p3);
-
-        printCartInfo(cart2, p1);
-        printCartInfo(cart2, p2);
-        printCartInfo(cart2, p3);
-
-        System.out.println("Inventory -- Stock | Name | ID | Price");
-        printInvInfo(inv, p1);
-        printInvInfo(inv, p2);
-        printInvInfo(inv, p3);
-
-        System.out.println("\n--- REMOVE FROM CART ---");
-        store.delFromCart(cart1,2,2);
-        printCartInfo(cart1, p1);
-        printCartInfo(cart1, p2);
-        printCartInfo(cart1, p3);
-        printCartInfo(cart2, p1);
-        printCartInfo(cart2, p2);
-        printCartInfo(cart2, p3);
-
-        printInvInfo(inv, p1);
-        printInvInfo(inv, p2);
-        printInvInfo(inv, p3);
+//        System.out.println("\n--- ORIGINAL INVENTORY ---");
+//        printInvInfo(inv, p1);
+//        printInvInfo(inv, p2);
+//        printInvInfo(inv, p3);
+//
+//        System.out.println("\n--- ADDING TO CART ---");
+//        store.addToCart(cart1,1, 2);
+//        store.addToCart(cart1,1, 10); //should not work
+//        store.addToCart(cart1,2, 5);
+//        store.addToCart(cart1,3, 5);
+//
+//        store.addToCart(cart2,1,5);
+//        store.addToCart(cart2,2,3);
+//        store.addToCart(cart2,3,1);
+//
+//        System.out.println("\nCart -- Stock | Name | ID | Price");
+//        printCartInfo(cart1, p1);
+//        printCartInfo(cart1, p2);
+//        printCartInfo(cart1, p3);
+//
+//        printCartInfo(cart2, p1);
+//        printCartInfo(cart2, p2);
+//        printCartInfo(cart2, p3);
+//
+//        System.out.println("Inventory -- Stock | Name | ID | Price");
+//        printInvInfo(inv, p1);
+//        printInvInfo(inv, p2);
+//        printInvInfo(inv, p3);
+//
+//        System.out.println("\n--- REMOVE FROM CART ---");
+//        store.delFromCart(cart1,2,2);
+//        printCartInfo(cart1, p1);
+//        printCartInfo(cart1, p2);
+//        printCartInfo(cart1, p3);
+//        printCartInfo(cart2, p1);
+//        printCartInfo(cart2, p2);
+//        printCartInfo(cart2, p3);
+//
+//        printInvInfo(inv, p1);
+//        printInvInfo(inv, p2);
+//        printInvInfo(inv, p3);
 
 
     }

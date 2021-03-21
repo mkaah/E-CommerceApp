@@ -20,12 +20,12 @@ public class Product {
     /**
      * Constructor for a Product
      * @param name  String, name of the product
-     * @param id    int, the product ID
+     * //@param id    int, the product ID
      * @param price double, the price of the product
      */
     public Product(String name, int id, double price) {
         NAME = name;
-        ID= id;
+        ID = id;
         PRICE = price;
     }
 
