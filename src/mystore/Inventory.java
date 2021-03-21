@@ -147,6 +147,7 @@ public class Inventory {
      */
     public void initialize(){
         this.addStock(new Product("Apple", 1, 10.00), 10);
+        this.addStock(new Product("A", -1, 50.00), 10);
         this.addStock(new Product("Banana", 2, 20.00), 20);
         this.addStock(new Product("Orange", 3, 40.00), 30);
     }
