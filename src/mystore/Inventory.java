@@ -17,7 +17,6 @@ public class Inventory {
     public Inventory() {
         this.products = new ArrayList<>();
         this.stocks = new ArrayList<>();
-        //initialize();
     }
 
     /**
@@ -58,9 +57,8 @@ public class Inventory {
     public Product getProduct(int id) {
         if (getProdIndex(id) != -1) { //product exists
             return products.get(getProdIndex(id));
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -71,9 +69,9 @@ public class Inventory {
     public String getProdName(int id) {
         if (getProdIndex(id) != -1) {
             return getProduct(id).getName();
-        } else {
-            return null;
         }
+        return null;
+
     }
 
     /**
@@ -84,9 +82,8 @@ public class Inventory {
     public double getProdPrice(int id) {
         if (getProdIndex(id) != -1) {
             return getProduct(id).getPrice();
-        } else {
-            return -1;
         }
+        return -1;
     }
 
      /**
@@ -99,7 +96,6 @@ public class Inventory {
         if(i > -1) { //product exists
             return stocks.get(i);
         }
-        //product does not exist
         return -1;
     }
 
@@ -146,6 +142,9 @@ public class Inventory {
         return new String[]{product.getName(), String.valueOf(product.getId()), String.valueOf(product.getPrice())};
     }
 
+    /**
+     * This method adds some default stock to the inventory
+     */
     public void initialize(){
         this.addStock(new Product("Apple", 1, 10.00), 10);
         this.addStock(new Product("Banana", 2, 20.00), 20);

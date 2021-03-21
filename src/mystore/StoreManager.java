@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  *  A StoreManager
  *  @author Dhriti Aravind 101141942, Mika Le 101141818
- *  @version 2.0 updated by Mika Le
+ *  @version 3.0 updated by Mika Le
  */
 
 public class StoreManager{
@@ -107,25 +107,16 @@ public class StoreManager{
      */
     public double checkout(ShoppingCart cart){
         double total = 0;
-        ArrayList<Product> products = cart.getProductList(); //need this.cart??? need cart as param??
+        ArrayList<Product> products = cart.getProductList();
         ArrayList<Integer> stock = cart.getStockList();
-        String[][] infoCart = getCartInfo(cart);
 
-        //calculate total
         for(int i = 0; i < products.size(); i++){
             total += products.get(i).getPrice() * stock.get(i);
         }
         total = Math.round(total * 100.0)/100.0;
 
-        //print summary of cart
-        System.out.println("YOUR CART:");
-        for(int i = 0; i < infoCart.length; i++){
-            System.out.println(infoCart[i][0] + " | $" + infoCart[i][1] + " | " + infoCart[i][2]);
-        }
-
         return total;
     }
-
 
     /**
      * Gives access to products in the cart. For each product, the

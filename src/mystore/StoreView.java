@@ -186,7 +186,11 @@ public class StoreView {
                 break;
             case("checkout"):
                 //checkout
-
+                System.out.println("YOUR CART:");
+                System.out.println("Stock | Name | Price");
+                for(int i = 0; i < store.getCartInfo(cart).length; i++){
+                    System.out.println(store.getCartInfo(cart)[i][2] + " | " + store.getCartInfo(cart)[i][0] + " | " + store.getCartInfo(cart)[i][1]);
+                }
                 System.out.println("TOTAL: $" + completePurchase(cart) + " CAD");
                 done = true;
                 break;
@@ -247,7 +251,7 @@ public class StoreView {
         StoreView[] users = {sv1, sv2, sv3};
         int activeSV = users.length;
 
-       //sm.getInventory().initialize();
+       sm.getInventory().initialize();
 
         Scanner scanner = new Scanner(System.in);
         String newView = "";
