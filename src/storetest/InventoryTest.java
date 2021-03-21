@@ -1,5 +1,6 @@
 package storetest;
 import mystore.Product;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,8 @@ public class InventoryTest {
     }
 
     /**
-     * Tests getStockList()
+     * Tests getStockList() it compares the expected amount of stock with each amount found
+     * in the stock array
      */
     @Test
     public void testGetStockList() {
@@ -41,6 +43,11 @@ public class InventoryTest {
         assertEquals(30, list.get(2),"getStockList() does not return the correct stocks amount");
     }
 
+    /**
+     * Tests getProductList() it compares the Product's attributes for each item in the array
+     * to the ones in the initalize function. Because there is no way to directly compare the
+     * Products, it compares attributes of each product to the expected.
+     */
     @Test
     public void testGetProductList() {
          ArrayList<Product> list =  inventory.getProductList();
@@ -57,12 +64,10 @@ public class InventoryTest {
         assertEquals(4.00, list.get(2).getPrice(),"getProductList() does not return the correct product");
     }
 
-    @Test
-    public void testGetProdIndex() {
-        //assertEquals(0, inventory.getProdIndex(1),"getProductList() does not return the correct product");
-
-    }
-
+    /**
+     * Tests getProduct(int id) it compares the Product's attributes to the ones in the initalize function.
+     * Because there is no way to directly compare the Products, it compares attributes of each product to the expected.
+     */
     @Test
     public void testGetProduct() {
         assertEquals(1, inventory.getProduct(1).getId(), "getProduct(int id) does not return the correct id");
@@ -78,6 +83,9 @@ public class InventoryTest {
         assertEquals(4.00, inventory.getProduct(3).getPrice(), "getProduct(int id) does not return the correct price");
     }
 
+    /**
+     * Tests that getProdName(int id) returns the right name
+     */
     @Test
     public void testGetProdName() {
         assertEquals("Apple", inventory.getProdName(1),   "getProdName(int id) does not return the correct name");
@@ -85,6 +93,9 @@ public class InventoryTest {
         assertEquals("Orange",inventory.getProdName(3),   "getProdName(int id) does not return the correct name");
     }
 
+    /**
+     * Tests that getProdPrice(int id) returns the right price
+     */
     @Test
     public void testGetProdPrice() {
         assertEquals(1.00, inventory.getProdPrice(1),  "getProdPrice(int id) does not return the correct price");
@@ -92,6 +103,9 @@ public class InventoryTest {
         assertEquals(4.00, inventory.getProdPrice(3),  "getProdPrice(int id) does not return the correct price");
     }
 
+    /**
+     * Tests that getStock(int id) returns the right amount of stock for the given id
+     */
     @Test
     public void testGetStock() {
         assertEquals(10, inventory.getStock(1),  "getStock(int id) does not return the correct amount of stock");
@@ -99,6 +113,9 @@ public class InventoryTest {
         assertEquals(30,inventory.getStock(3),  "getStock(int id) does not return the correct amount of stock");
     }
 
+    /**
+     * Tests that addStock(int id) correctly returns the total amount of product after having stock added.
+     */
     @Test
     public void testAddStock() {
         inventory.addStock(inventory.getProduct(1), 5);
@@ -110,6 +127,9 @@ public class InventoryTest {
         assertEquals(35,inventory.getStock(3),  "addStock(Product prod, int id)does not return the correct amount of stock");
     }
 
+    /**
+     * Tests that delStock(int id) correctly returns the total amount of product after having stock removed.
+     */
     @Test
     public void testDelStock() {
         inventory.delStock(1, 5);
@@ -119,6 +139,31 @@ public class InventoryTest {
         assertEquals(5, inventory.getStock(1),  "delStock(Product prod, int id) does not return the correct amount of stock");
         assertEquals(15,inventory.getStock(2),  "delStock(Product prod, int id) does not return the correct amount of stock");
         assertEquals(25,inventory.getStock(3),  "delStock(Product prod, int id) does not return the correct amount of stock");
+    }
+    /**
+     * Tests that getInformation() returns the correct product
+     * name, price, quantity in inventory, and id.
+     */
+    @Test
+    public void testGetInformation() {
+        ArrayList<Product> list =  inventory.getProductList();
+        String[][] expected = {{"Apple","1","1.0"},{"Banana","2","2.0"},{"Orange","3","4.0"}};
+        assertArrayEquals(expected[0], inventory.getInformation(list.get(0)), "Inventory does not return correct information");
+        assertArrayEquals(expected[1], inventory.getInformation(list.get(1)), "Inventory does not return correct information");
+        assertArrayEquals(expected[2], inventory.getInformation(list.get(2)), "Inventory does not return correct information");
+
+
+    }
+
+    /**
+     * After each test, clear and reinitialize the Inventory products
+     * and stock back to default.
+     */
+    @AfterEach
+    public void cleanup() {
+        inventory.getProductList().clear();
+        inventory.getStockList().clear();
+        inventory.initialize();
     }
 
 
