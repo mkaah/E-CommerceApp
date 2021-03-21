@@ -251,8 +251,6 @@ public class StoreView {
         StoreView[] users = {sv1, sv2, sv3};
         int activeSV = users.length;
 
-       sm.getInventory().initialize();
-
         Scanner scanner = new Scanner(System.in);
         String newView = "";
         while (activeSV > 0 && (newView.equals("") || newView.equals("y")||newView.equals("Y"))) {

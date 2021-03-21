@@ -1,9 +1,8 @@
 package storetest;
-import org.junit.jupiter.api.*;
+
 import mystore.*;
-
+import org.junit.jupiter.api.*;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

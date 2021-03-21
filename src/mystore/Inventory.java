@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * An Inventory
  * @author Dhriti Aravind 101141942, Mika Le 101141818
- * @version 1.0
+ * @version 2.0 updated by Mika Le
  */
 public class Inventory {
     private ArrayList<Product> products; //Products available in the inventory
