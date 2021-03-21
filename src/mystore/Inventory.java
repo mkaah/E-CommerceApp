@@ -106,10 +106,15 @@ public class Inventory {
      */
     public void addStock(Product product, int stock) {
         int i = getProdIndex(product.getId());
-        if(i == -1) {
-            products.add(product);
-            stocks.add(stock);
-        } else {
+        if(i == -1) { //id DNE
+            if(!products.contains(product.getName())){ //New product
+                products.add(product);
+                stocks.add(stock);
+            } else { //Product name exists but id is different
+
+                stocks.set(i, stocks.get(i) + stock);
+            }
+        } else { //Product exists
             stocks.set(i, stocks.get(i) + stock);
         }
     }
@@ -146,9 +151,9 @@ public class Inventory {
      * This method adds some default stock to the inventory
      */
     public void initialize(){
-        this.addStock(new Product("Apple", 1, 1.00), 10);
-        this.addStock(new Product("Banana", 2, 2.00), 20);
-        this.addStock(new Product("Orange", 3, 4.00), 30);
+        this.addStock(new Product("Apple", products.size() + 1, 1.00), 10);
+        this.addStock(new Product("Banana", products.size() + 1, 2.00), 20);
+        this.addStock(new Product("Orange", products.size() + 1, 4.00), 30);
     }
 
 }
