@@ -1,5 +1,6 @@
 package mystore;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 /**
@@ -53,7 +54,6 @@ public class StoreView {
         }
         System.out.println("Enter a command...");
         mainMenu(stringInput());
-
     }
 
     /**
@@ -242,33 +242,37 @@ public class StoreView {
         return intInput(m);
     }
 
+
+
     public static void main(String[] args) {
         StoreManager sm = new StoreManager();
         StoreView sv1 = new StoreView(sm, sm.assignCartID());
         StoreView sv2 = new StoreView(sm, sm.assignCartID());
         StoreView sv3 = new StoreView(sm, sm.assignCartID());
 
-        StoreView[] users = {sv1, sv2, sv3};
-        int activeSV = users.length;
-
-        Scanner scanner = new Scanner(System.in);
-        String newView = "";
-        while (activeSV > 0 && (newView.equals("") || newView.equals("y")||newView.equals("Y"))) {
-            int choice = chooseStoreview(activeSV-1);
-            if (users[choice] != null) {
-                System.out.print("CART >>> "+choice);
-                users[choice].getInventory();
-                if(users[choice].done) {
-                    users[choice] = null;
-                    activeSV--;
-                }
-            } else {
-                System.out.println("MAIN > ERROR > BAD CHOICE\nTHAT STOREVIEW WAS DEACTIVATED");
-            }
-            System.out.print("GO TO ANOTHER STOREVIEW? (y) >>> ");
-            newView = scanner.nextLine();
-        }
-        System.out.println("ALL STOREVIEWS DEACTIVATED");
-        System.exit(0);
+//        StoreView[] users = {sv1, sv2, sv3};
+//        int activeSV = users.length;
+//
+//        Scanner scanner = new Scanner(System.in);
+//        String newView = "";
+//        while (activeSV > 0 && (newView.equals("") || newView.equals("y")||newView.equals("Y"))) {
+//            int choice = chooseStoreview(activeSV-1);
+//            if (users[choice] != null) {
+//                System.out.print("CART >>> "+choice);
+//                users[choice].getInventory();
+//                if(users[choice].done) {
+//                    users[choice] = null;
+//                    activeSV--;
+//                }
+//            } else {
+//                System.out.println("MAIN > ERROR > BAD CHOICE\nTHAT STOREVIEW WAS DEACTIVATED");
+//            }
+//            System.out.print("GO TO ANOTHER STOREVIEW? (y) >>> ");
+//            newView = scanner.nextLine();
+//        }
+//        System.out.println("ALL STOREVIEWS DEACTIVATED");
+//        System.exit(0);
     }
+
+
 }
