@@ -149,7 +149,7 @@ public class StoreManager{
         ArrayList<Product> products = this.inventory.getProductList();
         ArrayList<Integer> stock = this.inventory.getStockList();
 
-        String[][] info = new String[products.size()][stock.size() + 1];
+        String[][] info = new String[products.size()][4];
 
         for(int i = 0; i < products.size(); i++){
             info[i][0] = products.get(i).getName();
