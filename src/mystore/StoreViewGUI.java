@@ -9,11 +9,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.Math;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class StoreViewGUI {
     private final JFrame frame;
-
+    private int cartID;
     private StoreManager store;
     private ShoppingCart cart;
 
@@ -21,7 +22,7 @@ public class StoreViewGUI {
         this.frame = new JFrame();
         this.frame.setTitle("D&M Grocery Store");
         this.frame.setVisible(true);
-
+        this.cartID = cartID;
         this.store = store;
         this.cart = store.getCart(cartID);
     }
@@ -60,12 +61,21 @@ public class StoreViewGUI {
     }
 
     private JButton cartButton() {
-        JButton button = new JButton("Cart");
+        JButton button = new JButton();
 
+        button.setBackground(Color.black);
+        button.setForeground(Color.white);
+        button.setIcon(new ImageIcon("cart.png"));
+
+        button.setSize(new Dimension(200,90));
         button.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent ae) {
+                String[][] label = store.getCartInfo(store.getCart(cartID));
+                StringBuilder sb = new StringBuilder();
+                for(String[] a : label)
+                   sb.append(Arrays.toString(a));
+                JOptionPane.showMessageDialog(null,sb,"View Cart", JOptionPane.PLAIN_MESSAGE);
 
             }
         });
@@ -79,40 +89,59 @@ public class StoreViewGUI {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-
+                frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                frame.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent we) {
+                        if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")
+                                == JOptionPane.OK_OPTION) {
+                            frame.setVisible(false);
+                            frame.dispose();
+                        }
+                    }
+                });
             }
         });
         return button;
     }
 
-    private JButton checkoutButton() {
-        JButton button = new JButton("Checkout");
-
-        button.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-            }
-        });
-        return button;
-    }
-
-    private JButton addToCartButton() {
+    private JButton addButton(int option, JLabel selectedStock) {
         JButton button = new JButton("+");
 
         button.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
+                String[][] info = store.getCartInfo(cart);
+
+                store.addToCart(cart, Integer.parseInt(info[option][3]), Integer.parseInt(info[option][2]));
+                selectedStock.setText(String.valueOf(store.getCartStock(cart, Integer.parseInt(info[option][3]))));
+
 
             }
         });
         return button;
     }
 
-    private JButton removeFromCartButton() {
-        JButton button = new JButton("-");
+    private JToggleButton removeButton(int option) {
+        JToggleButton button = new JToggleButton("-");
+
+        button.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String[][] info = store.getCartInfo(cart);
+                store.delFromCart(cart, Integer.parseInt(info[option][3]), Integer.parseInt(info[option][2]));
+
+            }
+        });
+        return button;
+    }
+
+
+    private JButton checkoutButton() {
+        JButton button = new JButton("Checkout");
+        button.setFont(new Font("Helvetica",Font.BOLD,11));
 
         button.addActionListener(new ActionListener() {
 
@@ -123,6 +152,8 @@ public class StoreViewGUI {
         });
         return button;
     }
+
+
 
     private JPanel productPanel(){
         JPanel panel = new JPanel(new GridLayout());
@@ -136,11 +167,20 @@ public class StoreViewGUI {
             JLabel name = new JLabel(store.getInventoryInfo()[i][0]);
             JLabel price = new JLabel("$"+store.getInventoryInfo()[i][1]);
             JLabel stock = new JLabel("Stock: "+store.getInventoryInfo()[i][2]);
-
+            JLabel selectedStock = new JLabel("0");
             //add image
+            JPanel selectStock = new JPanel(new GridLayout(1,4));
+            selectStock.add(stock);
+
+            selectStock.add(selectedStock);
+            selectStock.add(addButton(i, selectedStock));
+            selectStock.add(removeButton(i));
+
+
             infoPanel.add(name, BorderLayout.PAGE_START);
             infoPanel.add(price, BorderLayout.CENTER);
-            infoPanel.add(stock, BorderLayout.PAGE_END);
+            infoPanel.add(selectStock, BorderLayout.PAGE_END);
+
 
             productPanel.add(infoPanel, BorderLayout.SOUTH);
 
