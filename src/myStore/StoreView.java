@@ -152,38 +152,30 @@ public class StoreView {
         JLabel headerLabel = new JLabel("SELECT YOUR CART");
         headerPanel.add(headerLabel);
 
-        //body
-        NumberFormatter inputFormat = new NumberFormatter(new DecimalFormat("####"));
-        inputFormat.setValueClass(Integer.class);
-        inputFormat.setAllowsInvalid(false);
-        inputFormat.setMinimum(1);
-        inputFormat.setMaximum(9999);
-        JFormattedTextField input = new JFormattedTextField(inputFormat);
-        input.setColumns(3);
+        JComboBox<Integer> currentCarts = new JComboBox<Integer>();
+        JButton b = new JButton("Ok");
 
-        input.addActionListener(new ActionListener() {
+        for(StoreView currentUser: users) {
+            currentCarts.addItem(currentUser.getCartID());
+        }
+
+        b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                boolean achieved = false;
-                int cartID = Integer.parseInt(input.getText());
-                for(StoreView currentUser : users){
-
-                    if(currentUser.getCartID() == cartID && currentUser != null){
-                        achieved = true;
-                        displayStore(currentUser);
+                for(StoreView currentU : users){
+                    if(currentU.getCartID() == currentCarts.getItemAt(currentCarts.getSelectedIndex())) {
+                        displayStore(currentU);
                         frame.setVisible(false);
                         frame.dispose();
                         break;
                     }
                 }
 
-                if(achieved == false) {
-                    JOptionPane.showMessageDialog(frame, "Invalid Input", "Cart Input", JOptionPane.ERROR_MESSAGE);
-                }
             }
         });
 
-        bodyPanel.add(input);
+        bodyPanel.add(currentCarts);
+        bodyPanel.add(b);
 
         mainPanel.add(headerPanel, BorderLayout.PAGE_START);
         mainPanel.add(bodyPanel, BorderLayout.CENTER);
@@ -272,7 +264,6 @@ public class StoreView {
             public void actionPerformed(ActionEvent actionEvent) {
                 if(JOptionPane.showConfirmDialog(frame, "Your Total Is:  $" + storeview.store.checkout(storeview.cart),"Checkout",JOptionPane.YES_NO_OPTION)
                         == JOptionPane.OK_OPTION) {
-
                     frame.setVisible(false);
                     frame.dispose();
                     int c = 0;
