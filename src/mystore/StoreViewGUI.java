@@ -5,7 +5,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -30,70 +29,6 @@ public class StoreViewGUI {
         return this.cart.getId();
     }
 
-    private static JButton cartButton() {
-        JButton button = new JButton("Cart");
-
-        button.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-            }
-        });
-        return button;
-    }
-
-    private static JButton quitButton() {
-        JButton button = new JButton("Quit");
-
-        button.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-            }
-        });
-        return button;
-    }
-
-    private static JButton checkoutButton() {
-        JButton button = new JButton("Checkout");
-
-        button.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-            }
-        });
-        return button;
-    }
-
-    private JButton addToCartButton() {
-        JButton button = new JButton("+");
-
-        button.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-            }
-        });
-        return button;
-    }
-
-    private JButton removeFromCartButton() {
-        JButton button = new JButton("-");
-
-        button.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-            }
-        });
-        return button;
-    }
 
     private JPanel[] getProductPanels(){
         JPanel[] productPanels = new JPanel[store.getInventoryInfo().length];
@@ -112,8 +47,40 @@ public class StoreViewGUI {
             infoPanel.add(nameLabel, BorderLayout.PAGE_START);
             infoPanel.add(infoLabel, BorderLayout.CENTER);
 
-            buttonPanel.add(addToCartButton());
-            buttonPanel.add(removeFromCartButton());
+            JButton addButton = new JButton("+");
+            JButton removeButton = new JButton("-");
+            //JLabel count = new JLabel(String.valueOf(cart.getStock(Integer.parseInt(store.getInventoryInfo()[i][3]))));
+            JLabel count = new JLabel("0");
+
+            int finalI = i;
+            addButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    store.addToCart(cart, Integer.parseInt(store.getInventoryInfo()[finalI][3]), 1);
+                    count.setText(String.valueOf(cart.getStock(Integer.parseInt(store.getInventoryInfo()[finalI][3]))));
+                    infoLabel.setText("($"+store.getInventoryInfo()[finalI][1] + ") - Stock: " + store.getInventoryInfo()[finalI][2]);
+
+                }
+            });
+
+            removeButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //if (Integer.parseInt(store.getInventoryInfo()[finalI][2]) > 0) {
+                        store.delFromCart(cart, Integer.parseInt(store.getInventoryInfo()[finalI][3]), 1);
+                        if(cart.getStock(Integer.parseInt(store.getInventoryInfo()[finalI][3])) != -1) {
+                            count.setText(String.valueOf(cart.getStock(Integer.parseInt(store.getInventoryInfo()[finalI][3]))));
+                        }
+
+                        infoLabel.setText("($"+store.getInventoryInfo()[finalI][1] + ") - Stock: " + store.getInventoryInfo()[finalI][2]);
+                   // }
+                }
+            });
+
+            buttonPanel.add(addButton);
+            buttonPanel.add(count);
+            buttonPanel.add(removeButton);
 
             Image image = null;
             try {
@@ -179,16 +146,23 @@ public class StoreViewGUI {
         input.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                boolean achieved = false;
                 int cartID = Integer.parseInt(input.getText());
                 for(StoreViewGUI currentUser : users){
-                    if(currentUser.getCartID() == cartID){
+
+                    if(currentUser.getCartID() == cartID && currentUser != null){
+                        //dee add logic
+                        achieved = true;
                         displayStore(currentUser);
                         frame.setVisible(false);
                         frame.dispose();
                         break;
                     }
                 }
-                JOptionPane.showMessageDialog(frame, "Invalid ID");
+
+                if(achieved == false) {
+                    JOptionPane.showMessageDialog(frame, "Invalid Input", "Cart Input", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -214,6 +188,7 @@ public class StoreViewGUI {
         frame.setVisible(true);
     }
 
+
     public static void displayStore(StoreViewGUI storeview){
         JFrame frame = new JFrame();
         frame.setTitle("D&M Grocery Store");
@@ -229,8 +204,38 @@ public class StoreViewGUI {
         //header
         JLabel headerLabel = new JLabel("Welcome to D&M Grocery Store (ID: " + storeview.getCartID() + ")");
         headerPanel.add(headerLabel);
-        headerPanel.add(cartButton());
-        headerPanel.add(quitButton());
+
+        JButton cartButton = new JButton("Cart");
+        cartButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String[][] info = storeview.store.getCartInfo(storeview.cart);
+                StringBuilder sb = new StringBuilder();
+                String s = "";
+                for(String[] strings : info) {
+                    //sb.append(Arrays.toString(strings)).append('\n');
+                    sb.append(strings[0] +" - $"+ strings[1] + " |  Amount: "+ strings[2] + "\n");
+                }
+                sb.append("\nCURRENT TOTAL: $" + storeview.store.checkout(storeview.cart));
+                JOptionPane.showMessageDialog(null, sb, "View Cart", JOptionPane.PLAIN_MESSAGE);
+            }
+        });
+
+        headerPanel.add(cartButton);
+        JButton quitButton = new JButton("Quit");
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")
+                        == JOptionPane.OK_OPTION) {
+                    frame.setVisible(false);
+                    frame.dispose();
+                    windowExit(frame);
+                }
+            }
+        });
+
+        headerPanel.add(quitButton);
 
         //body
         JPanel[] productPanels = storeview.getProductPanels();
@@ -240,12 +245,34 @@ public class StoreViewGUI {
         JScrollPane scrollPane = new JScrollPane(bodyPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         //footer
-        footerPanel.add(checkoutButton());
+        JButton checkoutB = new JButton("Checkout");
+        checkoutB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(JOptionPane.showConfirmDialog(frame, "Your Total Is:  $" + storeview.store.checkout(storeview.cart),"Checkout",JOptionPane.YES_NO_OPTION)
+                        == JOptionPane.OK_OPTION) {
+
+                    frame.setVisible(false);
+                    frame.dispose();
+                    int c = 0;
+                    for (StoreViewGUI currentUser : users) {
+                        c++;
+                        if (currentUser.getCartID() == storeview.getCartID()) {
+                            users[c] = null;
+                            break;
+                        }
+                    }
+                    selectCart();
+                }
+            }
+        });
+        footerPanel.add(checkoutB);
 
         //add panels to main panel
         mainPanel.add(headerPanel, BorderLayout.PAGE_START);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(footerPanel, BorderLayout.PAGE_END);
+
 
         windowExit(frame);
 
