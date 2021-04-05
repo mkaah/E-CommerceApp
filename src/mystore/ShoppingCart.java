@@ -1,4 +1,4 @@
-package mystore;
+package myStore;
 
 /**
  * A ShoppingCart

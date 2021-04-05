@@ -1,11 +1,11 @@
-package mystore;
+package myStore;
 
 import java.util.ArrayList;
 
 /**
  * An Inventory
  * @author Dhriti Aravind 101141942, Mika Le 101141818
- * @version 2.0 updated by Mika Le
+ * @version 3.0 updated by Mika Le
  */
 public class Inventory {
     private ArrayList<Product> products; //Products available in the inventory
@@ -149,10 +149,11 @@ public class Inventory {
         this.addStock(new Product("Apple", products.size() + 1, 0.79), 10);
         this.addStock(new Product("Banana", products.size() + 1, 0.59), 20);
         this.addStock(new Product("Orange", products.size() + 1, 0.79), 30);
-        this.addStock(new Product("Crackers", products.size() + 1, 5.99), 50);
-        this.addStock(new Product("Water Bottle", products.size() + 1, 1.29), 50);
-        this.addStock(new Product("Ramen Noodles", products.size() + 1, 5.99), 30);
-        this.addStock(new Product("Chips", products.size() + 1, 1.99), 30);
+        this.addStock(new Product("Strawberries", products.size() + 1, 6.99), 50);
+        this.addStock(new Product("Blueberries", products.size() + 1, 5.29), 50);
+        this.addStock(new Product("Kiwi", products.size() + 1, 5.98), 30);
+        this.addStock(new Product("Mango", products.size() + 1, 2.65), 30);
+        this.addStock(new Product("Watermelon", products.size() + 1, 9.85), 30);
     }
 
 }

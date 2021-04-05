@@ -1,4 +1,4 @@
-package mystore;
+package myStore;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,56 +14,20 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.Math;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 
 public class StoreViewGUI {
-//    private final JFrame frame;
-
     private StoreManager store;
     private ShoppingCart cart;
     private static StoreViewGUI[] users;
 
     public StoreViewGUI(StoreManager store, int cartID){
-//        this.frame = new JFrame();
-//        this.frame.setTitle("D&M Grocery Store");
-//        this.frame.setVisible(true);
-
         this.store = store;
         this.cart = store.getCart(cartID);
     }
 
-    /**
-     * This method displays a confirmation prompt when user
-     * tries to quit the window
-     */
-    private static void windowExit(JFrame frame){
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent we) {
-                if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")
-                        == JOptionPane.OK_OPTION) {
-                    frame.setVisible(false);
-                    frame.dispose();
-                }
-            }
-        });
-    }
-
-    private Color getColour() {
-        int r = (int)(Math.random()*256);
-        int g = (int)(Math.random()*256);
-        int b = (int)(Math.random()*256);
-        double luma = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
-
-        while (luma < 75) {
-            r = (int)(Math.random()*256);
-            g = (int)(Math.random()*256);
-            b = (int)(Math.random()*256);
-            luma = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
-        }
-        return new Color(r, g, b);
+    public int getCartID(){
+        return this.cart.getId();
     }
 
     private static JButton cartButton() {
@@ -139,7 +103,7 @@ public class StoreViewGUI {
             JPanel buttonPanel = new JPanel();
 
             JPanel panel = new JPanel(new BorderLayout());
-            panel.setBackground(getColour());
+            panel.setBackground(new Color(255, 232, 171));
             panel.setMinimumSize(new Dimension(300,500)); //not working??
             panel.setBorder(new EmptyBorder(10,10,10,10));
 
@@ -153,14 +117,12 @@ public class StoreViewGUI {
 
             Image image = null;
             try {
-                image = ImageIO.read(new File("./src/mystore/images/"+ store.getInventoryInfo()[i][0]+".jpg"));
+                image = ImageIO.read(new File("./src/myStore/images/"+ store.getInventoryInfo()[i][0]+".png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
             image = image.getScaledInstance(200,200, Image.SCALE_DEFAULT);
             JLabel imageLabel = new JLabel(new ImageIcon(image));
-            //JLabel imageLabel = new JLabel("IMAGE");
-
 
             panel.add(infoPanel, BorderLayout.NORTH);
             panel.add(imageLabel, BorderLayout.CENTER);
@@ -172,8 +134,22 @@ public class StoreViewGUI {
         return productPanels;
     }
 
-    public int getCartID(){
-        return this.cart.getId();
+    /**
+     * This method displays a confirmation prompt when user
+     * tries to quit the window
+     */
+    private static void windowExit(JFrame frame){
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")
+                        == JOptionPane.OK_OPTION) {
+                    frame.setVisible(false);
+                    frame.dispose();
+                }
+            }
+        });
     }
 
     public static void selectCart(){
@@ -193,7 +169,7 @@ public class StoreViewGUI {
         NumberFormatter inputFormat = new NumberFormatter(new DecimalFormat("####"));
         inputFormat.setValueClass(Integer.class);
         inputFormat.setAllowsInvalid(false);
-        inputFormat.setMinimum(0);
+        inputFormat.setMinimum(1);
         inputFormat.setMaximum(9999);
         JFormattedTextField input = new JFormattedTextField(inputFormat);
         input.setColumns(3);
@@ -206,14 +182,13 @@ public class StoreViewGUI {
                 int cartID = Integer.parseInt(input.getText());
                 for(StoreViewGUI currentUser : users){
                     if(currentUser.getCartID() == cartID){
-                        //dee add logic
                         displayStore(currentUser);
                         frame.setVisible(false);
                         frame.dispose();
                         break;
                     }
                 }
-                //pop up dialog saying invalid input
+                JOptionPane.showMessageDialog(frame, "Invalid ID");
             }
         });
 
@@ -247,7 +222,8 @@ public class StoreViewGUI {
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel headerPanel = new JPanel(new FlowLayout());
-        JPanel bodyPanel = new JPanel(new GridLayout(4,2));
+        int numRows = (int)(Math.ceil(storeview.store.getInventoryInfo().length/2.0));
+        JPanel bodyPanel = new JPanel(new GridLayout(numRows,2));
         JPanel footerPanel = new JPanel();
 
         //header
@@ -287,7 +263,6 @@ public class StoreViewGUI {
         users = new StoreViewGUI[]{sv1, sv2, sv3};
 
         selectCart();
-
     }
 
 }

@@ -1,4 +1,4 @@
-package mystore;
+package myStore;
 
 import java.util.ArrayList;
 
