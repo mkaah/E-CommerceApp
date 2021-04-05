@@ -14,34 +14,55 @@ import java.io.IOException;
 import java.lang.Math;
 import java.text.DecimalFormat;
 
+/**
+ * A StoreView class to manage the UI of the store.
+ *
+ * @author Dhriti Aravind 101141942, Mika Le 101141818
+ * @version 2.0
+ */
 
 public class StoreViewGUI {
     private StoreManager store;
     private ShoppingCart cart;
     private static StoreViewGUI[] users;
 
+    /**
+     * Constructor for StoreView
+     * @param store     StoreManager, current store manager
+     * @param cartID    int, id number of current cart
+     */
     public StoreViewGUI(StoreManager store, int cartID){
         this.store = store;
         this.cart = store.getCart(cartID);
     }
 
+    /**
+     * This method gives access to the cartID
+     * @return int, cartID of the StoreView's cart
+     */
     public int getCartID(){
         return this.cart.getId();
     }
 
-
+    /**
+     * This method creates and returns a list of JPanels representing
+     * a product in the store. Each JPanel displays information about a
+     * product and has buttons to add and remove the product from the cart.
+     * @return JPanel[], list of JPanels representing a product
+     */
     private JPanel[] getProductPanels(){
         JPanel[] productPanels = new JPanel[store.getInventoryInfo().length];
 
         for(int i = 0; i < store.getInventoryInfo().length; i++){
-            JPanel infoPanel = new JPanel(new BorderLayout());
-            JPanel buttonPanel = new JPanel();
-
             JPanel panel = new JPanel(new BorderLayout());
-            panel.setBackground(new Color(255, 232, 171));
-            panel.setMinimumSize(new Dimension(300,500)); //not working??
-            panel.setBorder(new EmptyBorder(10,10,10,10));
+            panel.setBackground(new Color(230, 255, 219));
+            panel.setMinimumSize(new Dimension(300,500));
 
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setBorder(new EmptyBorder(0,0,10,0));
+
+            JPanel infoPanel = new JPanel(new BorderLayout());
+            infoPanel.setBackground(new Color(230, 255, 219));
             JLabel nameLabel = new JLabel(store.getInventoryInfo()[i][0]);
             JLabel infoLabel = new JLabel("($"+store.getInventoryInfo()[i][1] + ") - Stock: " + store.getInventoryInfo()[i][2]);
             infoPanel.add(nameLabel, BorderLayout.PAGE_START);
@@ -49,14 +70,12 @@ public class StoreViewGUI {
 
             JButton addButton = new JButton("+");
             JButton removeButton = new JButton("-");
-            //JLabel count = new JLabel(String.valueOf(cart.getStock(Integer.parseInt(store.getInventoryInfo()[i][3]))));
             JLabel count = new JLabel("0");
 
             int finalI = i;
             addButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
                     store.addToCart(cart, Integer.parseInt(store.getInventoryInfo()[finalI][3]), 1);
                     count.setText(String.valueOf(cart.getStock(Integer.parseInt(store.getInventoryInfo()[finalI][3]))));
                     infoLabel.setText("($"+store.getInventoryInfo()[finalI][1] + ") - Stock: " + store.getInventoryInfo()[finalI][2]);
@@ -67,14 +86,11 @@ public class StoreViewGUI {
             removeButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //if (Integer.parseInt(store.getInventoryInfo()[finalI][2]) > 0) {
                         store.delFromCart(cart, Integer.parseInt(store.getInventoryInfo()[finalI][3]), 1);
                         if(cart.getStock(Integer.parseInt(store.getInventoryInfo()[finalI][3])) != -1) {
                             count.setText(String.valueOf(cart.getStock(Integer.parseInt(store.getInventoryInfo()[finalI][3]))));
                         }
-
                         infoLabel.setText("($"+store.getInventoryInfo()[finalI][1] + ") - Stock: " + store.getInventoryInfo()[finalI][2]);
-                   // }
                 }
             });
 
@@ -119,6 +135,10 @@ public class StoreViewGUI {
         });
     }
 
+    /**
+     * This method prompts the user to select a cart and
+     * brings them to the store when a valid input is entered
+     */
     public static void selectCart(){
         JFrame frame = new JFrame();
         frame.setTitle("D&M Grocery Store");
@@ -140,8 +160,6 @@ public class StoreViewGUI {
         inputFormat.setMaximum(9999);
         JFormattedTextField input = new JFormattedTextField(inputFormat);
         input.setColumns(3);
-
-        //TODO: cannot delete last char in text field
 
         input.addActionListener(new ActionListener() {
             @Override
@@ -188,7 +206,11 @@ public class StoreViewGUI {
         frame.setVisible(true);
     }
 
-
+    /**
+     * This is the main store GUI. It allows users to browse the store,
+     * add and remove items from their cart, view their cart, checkout, and quit
+     * @param storeview StoreView, the StoreView that was selected in the previous prompt
+     */
     public static void displayStore(StoreViewGUI storeview){
         JFrame frame = new JFrame();
         frame.setTitle("D&M Grocery Store");
@@ -272,7 +294,6 @@ public class StoreViewGUI {
         mainPanel.add(headerPanel, BorderLayout.PAGE_START);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(footerPanel, BorderLayout.PAGE_END);
-
 
         windowExit(frame);
 
