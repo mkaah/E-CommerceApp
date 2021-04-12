@@ -270,9 +270,8 @@ public class StoreView {
                         == JOptionPane.OK_OPTION) {
                     frame.setVisible(false);
                     frame.dispose();
-                    int c = 0;
+
                     for (StoreView currentUser : users) {
-                        c++;
                         if (currentUser.getCartID() == storeview.getCartID()) {
                             users.remove(currentUser);
                             break;
