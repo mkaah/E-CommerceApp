@@ -1,30 +1,30 @@
 package myStore;
 
-import javax.imageio.ImageIO;
+import java.lang.Math;
+import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.border.EmptyBorder;
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.lang.Math;
-import java.text.DecimalFormat;
+
 
 /**
  * A StoreView class to manage the UI of the store.
  *
  * @author Dhriti Aravind 101141942, Mika Le 101141818
- * @version 2.0
+ * @version 3.0
  */
 
 public class StoreView {
     private StoreManager store;
     private ShoppingCart cart;
-    private static StoreView[] users;
+    private static ArrayList<StoreView> users = new ArrayList<>();
 
     /**
      * Constructor for StoreView
@@ -49,11 +49,12 @@ public class StoreView {
      * a product in the store. Each JPanel displays information about a
      * product and has buttons to add and remove the product from the cart.
      * @return JPanel[], list of JPanels representing a product
+     * @param availableProducts
      */
-    private JPanel[] getProductPanels(){
-        JPanel[] productPanels = new JPanel[store.getInventoryInfo().length];
+    private JPanel[] getProductPanels(ArrayList<Product> availableProducts){
+        JPanel[] productPanels = new JPanel[availableProducts.size()];
 
-        for(int i = 0; i < store.getInventoryInfo().length; i++){
+        for(int i = 0; i < availableProducts.size(); i++){
             JPanel panel = new JPanel(new BorderLayout());
             panel.setBackground(new Color(230, 255, 219));
             panel.setMinimumSize(new Dimension(300,500));
@@ -63,8 +64,8 @@ public class StoreView {
 
             JPanel infoPanel = new JPanel(new BorderLayout());
             infoPanel.setBackground(new Color(230, 255, 219));
-            JLabel nameLabel = new JLabel(store.getInventoryInfo()[i][0]);
-            JLabel infoLabel = new JLabel("($"+store.getInventoryInfo()[i][1] + ") - Stock: " + store.getInventoryInfo()[i][2]);
+            JLabel nameLabel = new JLabel(availableProducts.get(i).getName());
+            JLabel infoLabel = new JLabel("($"+availableProducts.get(i).getPrice() + ") - Stock: " + store.geInvProdStock(availableProducts.get(i)));
             infoPanel.add(nameLabel, BorderLayout.PAGE_START);
             infoPanel.add(infoLabel, BorderLayout.CENTER);
 
@@ -76,9 +77,12 @@ public class StoreView {
             addButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    store.addToCart(cart, Integer.parseInt(store.getInventoryInfo()[finalI][3]), 1);
-                    count.setText(String.valueOf(cart.getStock(Integer.parseInt(store.getInventoryInfo()[finalI][3]))));
-                    infoLabel.setText("($"+store.getInventoryInfo()[finalI][1] + ") - Stock: " + store.getInventoryInfo()[finalI][2]);
+//                    store.addToCart(cart, Integer.parseInt(store.getInventoryInfo()[finalI][3]), 1);
+//                    count.setText(String.valueOf(cart.getStock(Integer.parseInt(store.getInventoryInfo()[finalI][3]))));
+
+                    store.addToCart(cart, availableProducts.get(finalI), 1);
+                    count.setText(String.valueOf(cart.getProductQuantity(availableProducts.get(finalI))));
+                    infoLabel.setText("($"+availableProducts.get(finalI).getPrice() + ") - Stock: " + store.geInvProdStock(availableProducts.get(finalI)));
 
                 }
             });
@@ -86,11 +90,11 @@ public class StoreView {
             removeButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    store.delFromCart(cart, Integer.parseInt(store.getInventoryInfo()[finalI][3]), 1);
-                    if(cart.getStock(Integer.parseInt(store.getInventoryInfo()[finalI][3])) != -1) {
-                        count.setText(String.valueOf(cart.getStock(Integer.parseInt(store.getInventoryInfo()[finalI][3]))));
+                    store.delFromCart(cart, availableProducts.get(finalI), 1);
+                    if(cart.getProductQuantity(availableProducts.get(finalI)) != -1) {
+                        count.setText(String.valueOf(cart.getProductQuantity(availableProducts.get(finalI))));
                     }
-                    infoLabel.setText("($"+store.getInventoryInfo()[finalI][1] + ") - Stock: " + store.getInventoryInfo()[finalI][2]);
+                    infoLabel.setText("($"+availableProducts.get(finalI).getPrice() + ") - Stock: " + store.geInvProdStock(availableProducts.get(finalI)));
                 }
             });
 
@@ -100,7 +104,7 @@ public class StoreView {
 
             Image image = null;
             try {
-                image = ImageIO.read(new File("./src/myStore/images/"+ store.getInventoryInfo()[i][0]+".png"));
+                image = ImageIO.read(new File("./src/myStore/images/"+ availableProducts.get(i).getName() + ".png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -118,28 +122,10 @@ public class StoreView {
     }
 
     /**
-     * This method displays a confirmation prompt when user
-     * tries to quit the window
-     */
-    private static void windowExit(JFrame frame){
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent we) {
-                if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")
-                        == JOptionPane.OK_OPTION) {
-                    frame.setVisible(false);
-                    frame.dispose();
-                }
-            }
-        });
-    }
-
-    /**
      * This method prompts the user to select a cart and
      * brings them to the store when a valid input is entered
      */
-    public static void selectCart(){
+    public void selectCart(){
         JFrame frame = new JFrame();
         frame.setTitle("D&M Grocery Store");
         frame.setSize(new Dimension(400,200));
@@ -156,18 +142,22 @@ public class StoreView {
         JButton b = new JButton("Ok");
 
         for(StoreView currentUser: users) {
-            currentCarts.addItem(currentUser.getCartID());
+            if(currentUser != null){
+                currentCarts.addItem(currentUser.getCartID());
+            }
         }
 
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 for(StoreView currentU : users){
-                    if(currentU.getCartID() == currentCarts.getItemAt(currentCarts.getSelectedIndex())) {
-                        displayStore(currentU);
-                        frame.setVisible(false);
-                        frame.dispose();
-                        break;
+                    if(currentCarts.getItemAt(currentCarts.getSelectedIndex()) != null){
+                        if(currentU.getCartID() == currentCarts.getItemAt(currentCarts.getSelectedIndex())) {
+                            displayStore(currentU);
+                            frame.setVisible(false);
+                            frame.dispose();
+                            break;
+                        }
                     }
                 }
 
@@ -202,7 +192,7 @@ public class StoreView {
      * add and remove items from their cart, view their cart, checkout, and quit
      * @param storeview StoreView, the StoreView that was selected in the previous prompt
      */
-    public static void displayStore(StoreView storeview){
+    public void displayStore(StoreView storeview){
         JFrame frame = new JFrame();
         frame.setTitle("D&M Grocery Store");
         frame.setPreferredSize(new Dimension(800,800));
@@ -210,7 +200,7 @@ public class StoreView {
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel headerPanel = new JPanel(new FlowLayout());
-        int numRows = (int)(Math.ceil(storeview.store.getInventoryInfo().length/2.0));
+        int numRows = (int)(Math.ceil(storeview.store.getAvailableProducts().size()/2.0));
         JPanel bodyPanel = new JPanel(new GridLayout(numRows,2));
         JPanel footerPanel = new JPanel();
 
@@ -222,14 +212,11 @@ public class StoreView {
         cartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String[][] info = storeview.store.getCartInfo(storeview.cart);
                 StringBuilder sb = new StringBuilder();
-                String s = "";
-                for(String[] strings : info) {
-                    //sb.append(Arrays.toString(strings)).append('\n');
-                    sb.append(strings[0] +" - $"+ strings[1] + " |  Amount: "+ strings[2] + "\n");
+                for(Product p : store.getCartContents(cart)) {
+                    sb.append(p.getName() + " - $"+ p.getPrice() + " |  Amount: "+ store.getCartProdStock(p) + "\n");
                 }
-                sb.append("\nCURRENT TOTAL: $" + storeview.store.checkout(storeview.cart));
+                sb.append("\nCURRENT TOTAL: $" + store.checkout(cart));
                 JOptionPane.showMessageDialog(null, sb, "View Cart", JOptionPane.PLAIN_MESSAGE);
             }
         });
@@ -243,7 +230,17 @@ public class StoreView {
                         == JOptionPane.OK_OPTION) {
                     frame.setVisible(false);
                     frame.dispose();
-                    windowExit(frame);
+                    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    frame.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent we) {
+                            if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")
+                                    == JOptionPane.OK_OPTION) {
+                                frame.setVisible(false);
+                                frame.dispose();
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -251,7 +248,8 @@ public class StoreView {
         headerPanel.add(quitButton);
 
         //body
-        JPanel[] productPanels = storeview.getProductPanels();
+        JPanel[] productPanels = storeview.getProductPanels(store.getAvailableProducts());
+
         for(int i = 0; i < productPanels.length; i++){
             bodyPanel.add(productPanels[i]);
         }
@@ -262,7 +260,13 @@ public class StoreView {
         checkoutB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(JOptionPane.showConfirmDialog(frame, "Your Total Is:  $" + storeview.store.checkout(storeview.cart),"Checkout",JOptionPane.YES_NO_OPTION)
+                StringBuilder sb = new StringBuilder();
+                for(Product p : store.getCartContents(cart)) {
+                    sb.append(p.getName() + " - $"+ p.getPrice() + " |  Amount: "+ store.getCartProdStock(p) + "\n");
+                }
+                sb.append("\nYOUR TOTAL IS: $" + store.checkout(cart));
+
+                if(JOptionPane.showConfirmDialog(frame, sb,"Checkout",JOptionPane.YES_NO_OPTION)
                         == JOptionPane.OK_OPTION) {
                     frame.setVisible(false);
                     frame.dispose();
@@ -270,7 +274,7 @@ public class StoreView {
                     for (StoreView currentUser : users) {
                         c++;
                         if (currentUser.getCartID() == storeview.getCartID()) {
-                            users[c] = null;
+                            users.remove(currentUser);
                             break;
                         }
                     }
@@ -285,7 +289,17 @@ public class StoreView {
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(footerPanel, BorderLayout.PAGE_END);
 
-        windowExit(frame);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                if (JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?")
+                        == JOptionPane.OK_OPTION) {
+                    frame.setVisible(false);
+                    frame.dispose();
+                }
+            }
+        });
 
         frame.add(mainPanel);
         frame.pack();
@@ -295,12 +309,10 @@ public class StoreView {
     public static void main(String[] args) {
         StoreManager sm = new StoreManager();
         StoreView sv1 = new StoreView(sm, sm.assignCartID());
-        StoreView sv2 = new StoreView(sm, sm.assignCartID());
-        StoreView sv3 = new StoreView(sm, sm.assignCartID());
 
-        users = new StoreView[]{sv1, sv2, sv3};
+        users.add(sv1);
 
-        selectCart();
+        sv1.selectCart();
     }
 
 }
