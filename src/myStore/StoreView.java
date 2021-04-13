@@ -49,7 +49,7 @@ public class StoreView {
      * a product in the store. Each JPanel displays information about a
      * product and has buttons to add and remove the product from the cart.
      * @return JPanel[], list of JPanels representing a product
-     * @param availableProducts
+     * @param availableProducts     ArrayList, list of available products
      */
     private JPanel[] getProductPanels(ArrayList<Product> availableProducts){
         JPanel[] productPanels = new JPanel[availableProducts.size()];
@@ -65,7 +65,7 @@ public class StoreView {
             JPanel infoPanel = new JPanel(new BorderLayout());
             infoPanel.setBackground(new Color(230, 255, 219));
             JLabel nameLabel = new JLabel(availableProducts.get(i).getName());
-            JLabel infoLabel = new JLabel("($"+availableProducts.get(i).getPrice() + ") - Stock: " + store.geInvProdStock(availableProducts.get(i)));
+            JLabel infoLabel = new JLabel("($"+availableProducts.get(i).getPrice() + ") - Stock: " + store.getInvProdStock(availableProducts.get(i)));
             infoPanel.add(nameLabel, BorderLayout.PAGE_START);
             infoPanel.add(infoLabel, BorderLayout.CENTER);
 
@@ -77,12 +77,10 @@ public class StoreView {
             addButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-//                    store.addToCart(cart, Integer.parseInt(store.getInventoryInfo()[finalI][3]), 1);
-//                    count.setText(String.valueOf(cart.getStock(Integer.parseInt(store.getInventoryInfo()[finalI][3]))));
 
                     store.addToCart(cart, availableProducts.get(finalI), 1);
                     count.setText(String.valueOf(cart.getProductQuantity(availableProducts.get(finalI))));
-                    infoLabel.setText("($"+availableProducts.get(finalI).getPrice() + ") - Stock: " + store.geInvProdStock(availableProducts.get(finalI)));
+                    infoLabel.setText("($"+availableProducts.get(finalI).getPrice() + ") - Stock: " + store.getInvProdStock(availableProducts.get(finalI)));
 
                 }
             });
@@ -94,7 +92,7 @@ public class StoreView {
                     if(cart.getProductQuantity(availableProducts.get(finalI)) != -1) {
                         count.setText(String.valueOf(cart.getProductQuantity(availableProducts.get(finalI))));
                     }
-                    infoLabel.setText("($"+availableProducts.get(finalI).getPrice() + ") - Stock: " + store.geInvProdStock(availableProducts.get(finalI)));
+                    infoLabel.setText("($"+availableProducts.get(finalI).getPrice() + ") - Stock: " + store.getInvProdStock(availableProducts.get(finalI)));
                 }
             });
 
@@ -214,7 +212,7 @@ public class StoreView {
             public void actionPerformed(ActionEvent e) {
                 StringBuilder sb = new StringBuilder();
                 for(Product p : store.getCartContents(cart)) {
-                    sb.append(p.getName() + " - $"+ p.getPrice() + " |  Amount: "+ store.getCartProdStock(p) + "\n");
+                    sb.append(p.getName() + " - $"+ p.getPrice() + " |  Amount: "+ store.getCartProdStock(cart, p) + "\n");
                 }
                 sb.append("\nCURRENT TOTAL: $" + store.checkout(cart));
                 JOptionPane.showMessageDialog(null, sb, "View Cart", JOptionPane.PLAIN_MESSAGE);
@@ -250,8 +248,8 @@ public class StoreView {
         //body
         JPanel[] productPanels = storeview.getProductPanels(store.getAvailableProducts());
 
-        for(int i = 0; i < productPanels.length; i++){
-            bodyPanel.add(productPanels[i]);
+        for (JPanel productPanel : productPanels) {
+            bodyPanel.add(productPanel);
         }
         JScrollPane scrollPane = new JScrollPane(bodyPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -262,7 +260,7 @@ public class StoreView {
             public void actionPerformed(ActionEvent actionEvent) {
                 StringBuilder sb = new StringBuilder();
                 for(Product p : store.getCartContents(cart)) {
-                    sb.append(p.getName() + " - $"+ p.getPrice() + " |  Amount: "+ store.getCartProdStock(p) + "\n");
+                    sb.append(p.getName() + " - $"+ p.getPrice() + " |  Amount: "+ store.getCartProdStock(cart, p) + "\n");
                 }
                 sb.append("\nYOUR TOTAL IS: $" + store.checkout(cart));
 

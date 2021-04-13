@@ -65,6 +65,12 @@ public class ShoppingCart implements ProductStockContainer{
         return -1;
     }
 
+    /**
+     * Get the quantity of a given product in the ShoppingCart
+     *
+     * @param product   Product, a product
+     * @return          int, amount of stock
+     */
     @Override
     public int getProductQuantity(Product product) {
         int i = getProdIndex(product.getId());
@@ -74,6 +80,12 @@ public class ShoppingCart implements ProductStockContainer{
         return -1;
     }
 
+    /**
+     * Add a specified amount of Product to the ShoppingCart
+     *
+     * @param product   Product, a product
+     * @param quantity  int, amount of stock
+     */
     @Override
     public void addProductQuantity(Product product, int quantity) {
         int i = getProdIndex(product.getId());
@@ -88,6 +100,12 @@ public class ShoppingCart implements ProductStockContainer{
         System.out.println("Total: " + total);
     }
 
+    /**
+     * Remove a specified amount of Product from the ShoppingCart
+     * @param product   Product, a product
+     * @param quantity  int, amount of stock
+     * @return          boolean, if the product quantity has been removed successfully
+     */
     @Override
     public boolean removeProductQuantity(Product product, int quantity) {
         int i = getProdIndex(product.getId());
@@ -103,6 +121,11 @@ public class ShoppingCart implements ProductStockContainer{
         return removed;
     }
 
+    /**
+     * Get the number of products in the ShoppingCart
+     *
+     * @return      int, Number of products
+     */
     @Override
     public int getNumOfProducts() {
         return numOfProducts;
