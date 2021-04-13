@@ -30,6 +30,7 @@ public class StoreManager{
         return carts.get(id - 1);
     }
 
+
     /**
      * Creates a unique cart ID, creates a ShoppingCart with that id
      * and adds it to the list of carts
@@ -75,18 +76,38 @@ public class StoreManager{
         return cart.getTotal();
     }
 
+    /**
+     * Gets the available products in the Inventory
+     * @return      ArrayList, products available in Inventory
+     */
     public ArrayList<Product> getAvailableProducts() {
         return inventory.getProductList();
     }
 
+    /**
+     * Gets the stock of a product in the inventory
+     * @param p     Product, the product which we want to know the stock
+     * @return      int, the amount of stock based on the product
+     */
     public int getInvProdStock(Product p){
         return inventory.getProductQuantity(p);
     }
 
+    /**
+     * Gets the contents of a ShoppingCart
+     * @param cart  ShoppingCart, the shopping cart we want to analyse
+     * @return      ArrayList, the list of products in the shopping cart
+     */
     public ArrayList<Product> getCartContents(ShoppingCart cart){
         return cart.getProductList();
     }
 
+    /**
+     * Gets the amount of a product in the ShoppingCart
+     * @param p     Product, the product in the shopping cart
+     * @param cart  ShoppingCart, the cart we want to see in
+     * @return      int, the amount of stock based on the product in the cart
+     */
     public int getCartProdStock(ShoppingCart cart, Product p){
         return cart.getProductQuantity(p);
     }

@@ -97,7 +97,6 @@ public class ShoppingCart implements ProductStockContainer{
             stocks.set(i, stocks.get(i) + quantity);
         }
         total += product.getPrice() * quantity;
-        System.out.println("Total: " + total);
     }
 
     /**

@@ -268,8 +268,9 @@ public class StoreView {
                         == JOptionPane.OK_OPTION) {
                     frame.setVisible(false);
                     frame.dispose();
-
+                    int c = 0;
                     for (StoreView currentUser : users) {
+                        c++;
                         if (currentUser.getCartID() == storeview.getCartID()) {
                             users.remove(currentUser);
                             break;
@@ -306,6 +307,7 @@ public class StoreView {
     public static void main(String[] args) {
         StoreManager sm = new StoreManager();
         StoreView sv1 = new StoreView(sm, sm.assignCartID());
+        StoreView sv2 = new StoreView(sm, sm.assignCartID());
 
         users.add(sv1);
 
