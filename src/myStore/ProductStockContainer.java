@@ -1,14 +1,13 @@
 package myStore;
 
 /**
- * @author Dhriti Aravind 101141942
- * @author Mika Le 101141818
+ * A ProductStockContainer interface
+ * @author Dhriti Aravind 101141942, Mika Le 101141818
  */
 public interface ProductStockContainer {
 
     /**
      * Get the quantity of a given product
-     *
      * @param product   Product, a product
      * @return          int, amount of stock
      */
@@ -16,7 +15,6 @@ public interface ProductStockContainer {
 
     /**
      * Add a specified amount of Product
-     *
      * @param product   Product, a product
      * @param quantity  int, amount of stock
      */
@@ -32,8 +30,7 @@ public interface ProductStockContainer {
 
     /**
      * Get the number of products
-     *
-     * @return      int, Number of products
+     * @return int, Number of products
      */
     int getNumOfProducts();
 

@@ -31,6 +31,10 @@ public class ShoppingCart implements ProductStockContainer{
         return this.ID;
     }
 
+    /**
+     * This method gives access to the total of the cart
+     * @return double, total of the products in the cart
+     */
     public double getTotal() {
         return Math.round(total*100.0)/100.0;
     }
@@ -59,7 +63,6 @@ public class ShoppingCart implements ProductStockContainer{
 
     /**
      * Get the quantity of a given product in the ShoppingCart
-     *
      * @param product   Product, a product
      * @return          int, amount of stock
      */
@@ -74,7 +77,6 @@ public class ShoppingCart implements ProductStockContainer{
 
     /**
      * Add a specified amount of Product to the ShoppingCart
-     *
      * @param product   Product, a product
      * @param quantity  int, amount of stock
      */
@@ -114,8 +116,7 @@ public class ShoppingCart implements ProductStockContainer{
 
     /**
      * Get the number of products in the ShoppingCart
-     *
-     * @return      int, Number of products
+     * @return int, Number of products
      */
     @Override
     public int getNumOfProducts() {

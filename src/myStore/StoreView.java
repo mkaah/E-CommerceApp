@@ -48,8 +48,8 @@ public class StoreView {
      * This method creates and returns a list of JPanels representing
      * a product in the store. Each JPanel displays information about a
      * product and has buttons to add and remove the product from the cart.
-     * @return JPanel[], list of JPanels representing a product
      * @param availableProducts     ArrayList, list of available products
+     * @return JPanel[], list of JPanels representing a product
      */
     private JPanel[] getProductPanels(ArrayList<Product> availableProducts){
         JPanel[] productPanels = new JPanel[availableProducts.size()];

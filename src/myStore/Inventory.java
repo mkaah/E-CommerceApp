@@ -43,7 +43,6 @@ public class Inventory implements ProductStockContainer{
 
     /**
      * Get the quantity of a given product in the Inventory
-     *
      * @param product   Product, a product
      * @return          int, amount of stock
      */
@@ -58,7 +57,6 @@ public class Inventory implements ProductStockContainer{
 
     /**
      * Add a specified amount of Product to the Inventory
-     *
      * @param product   Product, a product
      * @param quantity  int, amount of stock
      */
@@ -96,7 +94,6 @@ public class Inventory implements ProductStockContainer{
 
     /**
      * Get the number of products in the Inventory
-     *
      * @return      int, Number of products
      */
     @Override
