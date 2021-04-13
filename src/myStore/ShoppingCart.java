@@ -12,7 +12,7 @@ public class ShoppingCart implements ProductStockContainer{
     private ArrayList<Product> products = new ArrayList<>();
     private ArrayList<Integer> stocks = new ArrayList<>();
     private int numOfProducts = 0;
-    private final int id;
+    private final int ID;
     private double total = 0.0;
 
     /**
@@ -20,7 +20,7 @@ public class ShoppingCart implements ProductStockContainer{
      * @param id int, id of the cart
      */
     public ShoppingCart(int id){
-        this.id = id;
+        this.ID = id;
     }
 
     /**
@@ -28,19 +28,11 @@ public class ShoppingCart implements ProductStockContainer{
      * @return int, id of the cart
      */
     public int getId() {
-        return this.id;
+        return this.ID;
     }
 
     public double getTotal() {
-        return total;
-    }
-
-    /**
-     * This method gives access to the list of stock
-     * @return ArrayList<Integer>, list of stock
-     */
-    public ArrayList<Integer> getStockList() {
-        return this.stocks;
+        return Math.round(total*100.0)/100.0;
     }
 
     /**

@@ -20,14 +20,6 @@ public class Inventory implements ProductStockContainer{
     }
 
     /**
-     * This method gives access to the list of stock
-     * @return ArrayList<Integer>, list of stock
-     */
-    public ArrayList<Integer> getStockList() {
-        return this.stocks;
-    }
-
-    /**
      * This method gives access to the list of products
      * @return ArrayList<Product>, list of products
      */

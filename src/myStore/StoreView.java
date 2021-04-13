@@ -307,7 +307,6 @@ public class StoreView {
     public static void main(String[] args) {
         StoreManager sm = new StoreManager();
         StoreView sv1 = new StoreView(sm, sm.assignCartID());
-        StoreView sv2 = new StoreView(sm, sm.assignCartID());
 
         users.add(sv1);
 
